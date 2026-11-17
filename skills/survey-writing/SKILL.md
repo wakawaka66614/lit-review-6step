@@ -105,6 +105,8 @@ description: "Use when planning, outlining, drafting, or revising the body of an
 
 **写作取证据**：每个强论断从 `03_精读/论断证据.csv` 取 `claim_id`，按台账的 `support` 写强度、按 `conditions` 写限定；台账里没有的证据不许自由发挥。
 
+**关系综合**：同一主题的文献对，按 `lit-review-6step/references/synthesis.md` 判六种关系（一致 / 部分一致 / 冲突 / 方法差异 / 互补 / 无关），正文至少写到 L3（关系 + 差异来源 + 解释），不写“A 说……B 说……”。
+
 章节树：背景/预备 → taxonomy 总览 → 各类别逐节 → 数据集与指标 → 应用/benchmark → 挑战 → 结论。
 
 SLR 式综述加「检索方法」：数据库、关键词、纳入/排除标准、PRISMA 流程图；报告初筛数、纳入数、时间窗、RQ 数。

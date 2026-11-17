@@ -14,7 +14,7 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 
 | Common failure | How this pipeline handles it |
 |---|---|
-| The review reads like a stack of paper summaries | Concept matrix (rows = papers, columns = concepts) + contradiction map |
+| The review reads like a stack of paper summaries | Concept matrix + literature relation table (L1–L5 synthesis levels) + contradiction map |
 | Search is incomplete and undocumented | Four source types + strategy table + raw results kept + staged PRISMA counts |
 | Structure drifts while writing | Run the structure selector, fill the outline, then write |
 | Drifting away from the topic | Topic contract + a mentor review (MR) at every stage gate |
