@@ -1,5 +1,11 @@
 # AMiner 检索通道
 
+## 定位
+
+AMiner 只是**检索通道之一**：做元数据发现，单页最多 10 条，**没有引文网络、没有全文**。
+
+它不是完整的系统检索方案。系统综述要配合综合库、专业库、元数据 API 与引文追踪（OpenAlex / Semantic Scholar / 手工前向与后向）；AMiner 适合快速找奠基与前沿，不适合单独承担“全面检索”。
+
 ## 它是什么
 
 DSH 里配置的 MCP server `aminer`（`@scipen/aminer-mcp-server`），底层接口：

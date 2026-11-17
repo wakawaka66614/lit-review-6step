@@ -15,10 +15,11 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 | Common failure | How this pipeline handles it |
 |---|---|
 | The review reads like a stack of paper summaries | Concept matrix (rows = papers, columns = concepts) + contradiction map |
-| Search is incomplete and undocumented | Search strategy table + search log + PRISMA counts |
-| Structure drifts while writing | Fill the outline first (two taxonomies + cross matrix), then write |
+| Search is incomplete and undocumented | Four source types + strategy table + raw results kept + staged PRISMA counts |
+| Structure drifts while writing | Run the structure selector, fill the outline, then write |
 | Drifting away from the topic | Topic contract + a mentor review (MR) at every stage gate |
 | Claims not traceable to evidence | Claim–Evidence ledger + four verification levels (full text / abstract / metadata / unverified) |
+| All evidence treated as equal | Quality appraisal: pick a framework by design, rate high / medium / low with reasons |
 | Rigid structure, categories invented to fit it | Structure selector: six patterns, pattern A is only one option |
 | Skipping stages breaks the ending | Entry contracts + recorded debt, paid back at S5/S6 |
 
@@ -147,7 +148,9 @@ Fixed order: **MR → CR-S → HLA-S**. First confirm it is still on topic, then
 
 All three are read-only roles that never rewrite the draft; results go to `00_选题/导师审查.md` and `05_成稿/审校记录.md`. Rules: `skills/lit-review-6step/references/mentor-review.md` and `skills/survey-writing/references/review-and-alignment.md`.
 
-## Manuscript outline (pattern 1: new technology × old problem)
+## Outline example (pattern A: new technology × old problem)
+
+> Pattern A is only one of six structures; adjust the chapter skeleton with the selector when using another pattern.
 
 ```text
 1 Introduction: broad background → narrow background → existing surveys → this survey → structure
