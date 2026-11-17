@@ -2,7 +2,7 @@
 
 ## 验证环境
 
-- 日期：2026-11-09
+- 日期：2026-11-09 初验；2026-11-17 补验
 - 宿主：DSH（Windows 11），agent 模型 deepseek-flash
 - 验证人：武文政
 
@@ -10,25 +10,49 @@
 
 | 项 | 方法 | 结果 |
 |---|---|---|
-| skill 可被加载 | DSH 技能目录中出现 `lit-review-6step` | 通过 |
-| 子 skill 路径 | 逐一 `Test-Path` 6 个依赖的 `SKILL.md` | 6/6 存在 |
-| 安装脚本 | 指向空目录执行 `install.ps1`，检查落位 | 3 个 skill + 模板全部到位 |
-| AMiner 健康检查 | `node scripts/aminer_health.mjs` | 正确报出 `EXPIRED`（token 2026-10-24 过期） |
-| 入口表结构 | 人工核对 S1–S6 的产物与门禁 | 与 pipeline.md 一致 |
+| skill 可被加载 | DSH 技能目录出现 `lit-review-6step` | 通过 |
+| 子 skill 路径 | 逐一 `Test-Path` 依赖的 `SKILL.md` | 存在 |
+| 安装脚本（默认） | 空目录执行两次 `install.ps1` | 4 个 `.bak` 备份，7 个命令 |
+| 安装脚本（Claude） | `-SkillsDir .claude\skills` | 装到 `.claude\skills` 与 `.claude\commands`，无 `.dsh` |
+| AMiner 健康检查 | `node scripts/aminer_health.mjs` | 正确报 `EXPIRED` |
+| 引用审计脚本 | 5 篇候选 + 3 条 claim 的样例稿 | 命中 5 个预期错误 + 1 个未引用警告 |
+| OpenAlex 检索 | `--query "retrieval augmented generation"` | 返回 5 条，DOI/年份正常 |
+| OpenAlex 引文 | `--mode cited-by` / `--mode references` | 分别返回 3 / 5 条，CSV 同构 |
+| OpenAlex 无 key 翻页 | `--pages 2 --per-page 5` | 用 page 模式成功；cursor 深翻需要 key（已提示） |
+| 端到端脚手架 | `e2e-init.mjs` + 一次检索试跑 | 目录、金标准模板、评分表生成；10 条记录 |
 
 ## 未验证
 
-- **没有做过真实综述的端到端质量评估**：没有对照实验证明“用这套流程写出来的综述优于不用”。
-- **AMiner 检索通道未跑通真实查询**：token 过期，只验证了健康检查与降级路径，没有验证真实检索结果的字段映射。
-- **没有跨模型验证**：只在当前模型上加载过，其他 agent（Claude Code / Codex）未测试。
-- **没有验证“十篇盲测”等门禁的执行效果**：门禁是文字规则，没有脚本强制。
+- **没有做真实 A/B/C 对照**：`e2e/…/gold-set.csv` 仍为空，覆盖率与质量指标无法计算；`RESULTS.md` 只记录机制试跑。
+- **没有真实综述的端到端质量评估**：无对照实验证明“用这套流程写出来的综述优于不用”。
+- **没有跨模型验证**：其他 agent（Claude Code / Codex）未测试。
+- **门禁仍是文字规则**：十篇盲测、L3 关系判断等没有脚本强制。
+- **`-Global` 安装未实测**（避免污染用户级目录）。
 
 ## 复现步骤
 
 ```powershell
 git clone https://github.com/wakawaka66614/lit-review-6step.git
 cd lit-review-6step
-.\install.ps1 -Target C:\tmp\lr-test -WithDeps
-Test-Path C:\tmp\lr-test\.dsh\skills\lit-review-6step\SKILL.md
+
+# 安装与备份
+.\install.ps1 -Target C:\tmp\lr-a
+.\install.ps1 -Target C:\tmp\lr-a          # 第二次应生成 .bak-*
+.\install.ps1 -Target C:\tmp\lr-b -SkillsDir .claude\skills
+
+# 仓库自检
 node scripts/check.mjs
+
+# 引用审计（用仓库里的样例数据）
+node skills/lit-review-6step/scripts/audit-refs.mjs `
+  --manuscript ..\_research\audit-test\manuscript.md `
+  --candidates ..\_research\audit-test\candidates.csv `
+  --claims ..\_research\audit-test\claims.csv
+
+# OpenAlex 检索
+node skills/lit-review-6step/scripts/search-openalex.mjs `
+  --query "retrieval augmented generation" --pages 1 --per-page 5
+
+# 端到端脚手架
+node scripts/e2e-init.mjs --topic "your topic" --out e2e
 ```

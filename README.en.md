@@ -74,7 +74,19 @@ After installation the target project contains:
   文献综述项目模板/
 ```
 
-Claude Code users can point the installer at a project and change `.dsh/skills` to `.claude/skills` (one line in the script).
+Claude Code users add `-SkillsDir .claude\skills`; skills and commands go to `.claude\skills` and `.claude\commands`:
+
+```powershell
+.\install.ps1 -Target C:\path\to\your\project -SkillsDir .claude\skills -WithDeps
+```
+
+Install for the current user (all projects, no template copy):
+
+```powershell
+.\install.ps1 -Global -WithDeps
+```
+
+`-WithDeps` pins both MIT dependencies to verified commits (`literature-review-skill@7328261`, `literature-review-skills@5f6498d`) instead of following `main`.
 
 ## Self-check
 

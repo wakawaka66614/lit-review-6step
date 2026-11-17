@@ -72,7 +72,19 @@ cd lit-review-6step
   文献综述项目模板/
 ```
 
-Claude Code 用户把目标目录换成 `.claude/skills` 即可（`-Target` 指向项目根，脚本固定写到 `.dsh/skills`，可自行改一行）。
+Claude Code 用户加 `-SkillsDir .claude\skills`，技能与命令会装到 `.claude\skills` 与 `.claude\commands`：
+
+```powershell
+.\install.ps1 -Target C:\path\to\your\project -SkillsDir .claude\skills -WithDeps
+```
+
+装到用户级（所有项目可用，不复制模板）：
+
+```powershell
+.\install.ps1 -Global -WithDeps
+```
+
+`-WithDeps` 会把两个 MIT 依赖锁定到验证过的 commit（`literature-review-skill@7328261`、`literature-review-skills@5f6498d`），不跟 `main` 漂移。
 
 ## 自检
 
