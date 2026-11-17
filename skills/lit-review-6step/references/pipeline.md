@@ -102,7 +102,7 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 2. 按 PICO / PICOC / SPIDER 拆概念块，每块 3–8 个同义词，中英各一列；查 MeSH/主题词。
 3. 选来源：**综合库 + 专业库 + 元数据 API + 引文追踪**四类。数据库按领域与 RQ 选，写清理由，**不设“几英几中”的数量门槛**。
 4. 写检索式：**一个库一行**，语法不能跨库复制（WoS `TS=`、PubMed `[Title/Abstract]`、Scopus `TITLE-ABS-KEY`、CNKI `SU=`）。
-5. AMiner 只作为其中一个元数据/发现通道（见 `references/aminer.md`）；引文追踪用 OpenAlex、Semantic Scholar 或手工前向/后向。
+5. 机器通道：AMiner（MCP）与 OpenAlex（`scripts/search-openalex.mjs`），见 `references/channels.md`；引文追踪用 OpenAlex 的前向/后向模式，或手工雪球。
 
 **产物** `01_检索/检索策略表.md`、`01_检索/检索日志.md`、`01_检索/原始检索结果.csv`（去重前记录）。
 
@@ -115,7 +115,7 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 **执行**：
 1. 按策略逐库检索，**每次检索的原始记录先写入 `01_检索/原始检索结果.csv`**（去重前），再进入候选表。
 2. AMiner：每个查询取 2–3 页（10 条/页），`order=n_citation` 取奠基，`order=year` 取前沿；期刊定向用 `search_papers_by_venue`，核心作者用 `search_papers_by_author`。
-3. 引文追踪：对 5–10 篇种子做前向/后向扩展，记录种子、方向、工具、新增数。
+3. 引文追踪：对 5–10 篇种子做前向/后向扩展（OpenAlex `--mode cited-by` / `--mode references`，或手工），记录种子、方向、工具、新增数。
 4. 去重：DOI 优先；无 DOI 时标题归一化（小写、去标点、去空格）。
 5. 分阶段筛选：题摘筛选（E1–E4）→ 全文获取（E6 未获取，单独计数）→ 资格评估（E7 违反预设标准）。
 6. 统计 PRISMA 2020 分阶段计数，闭合校验见 `assets/search-log.md`。

@@ -90,7 +90,7 @@ S2 入口的 RQ 卡只要三行：题目、一句 RQ（对象 + 机制 + 边界�
 
 正文每写完一章，先过 **CR-S**（结构-逻辑审查：七节骨架、章节映射、论证链、防御性语言），再过 **HLA-S**（人类语言对齐：章际承接、段落节奏、术语一致、去 AI 腔）；摘要定稿前单独过 CR-S。规则见 `survey-writing/references/review-and-alignment.md`，结果记进 `05_成稿/审校记录.md`。
 
-阶段内的具体话术、字段定义和检查清单见 `references/pipeline.md`；检索通道细节见 `references/aminer.md`；成稿结构见 `references/survey-structure.md`。
+阶段内的具体话术、字段定义和检查清单见 `references/pipeline.md`；检索通道细节见 `references/channels.md`（含 AMiner 与 OpenAlex 用法）；成稿结构见 `references/survey-structure.md`。
 
 ## 项目布局
 

@@ -130,6 +130,8 @@ node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
 | `/survey-outline` | 只出「新技术 × 旧问题」提纲，不写正文 |
 | `/survey-abstract` | 只写或改摘要 |
 | `/mentor-check` | 跑一次导师审查，看当前阶段有没有跑题 |
+| `/search-openalex` | 用 OpenAlex 检索或做前向/后向引文追踪 |
+| `/audit-refs` | 跑引用与事实审计，报告写进 `05_成稿/引用审计.md` |
 
 Claude Code 把 `commands/*.md` 放到 `.claude/commands/`，之后可直接输入 `/lit-review-s2 题目：……`。DSH 用户说“读 `commands/lit-review-s2.md` 并执行”，安装脚本也会把它复制到 `.dsh/commands/`。
 

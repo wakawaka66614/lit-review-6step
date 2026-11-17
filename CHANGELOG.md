@@ -13,6 +13,7 @@
 - **新增研究质量评价**：按设计选框架，输出高/中/低 + 依据；提取表增加 `design`、`quality`、`quality_notes` 三列
 - **新增跨文献综合机制**：六种关系类型（一致 / 部分一致 / 冲突 / 方法差异 / 互补 / 无关）、L1–L5 综合层级、`04_综合/文献关系表.csv`；冲突地图只放“结论冲突”子集
 - **新增引用与事实审计脚本**：`skills/lit-review-6step/scripts/audit-refs.mjs`，查未知 ID、未纳入引用、作者年份、claim 核验等级，输出 `05_成稿/引用审计.md`
+- **新增 OpenAlex 检索通道**：`scripts/search-openalex.mjs`，支持检索、前向引文、后向引文，输出与原始检索结果同构的 CSV；新增 `references/channels.md` 与 `/search-openalex` 命令
 - 安装脚本改为**备份旧版本**而非删除；主 SKILL 版本统一为 2.0.0
 - 修正 HLA-S 示例中无来源的“12%”数字；修正 Gate B 的摘要时序（先蓝图、后正式摘要）；修正 README 与 workflow 中把模式 A 当默认的旧表述
 
