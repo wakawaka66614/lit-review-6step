@@ -2,8 +2,8 @@
 name: lit-review-6step
 description: 六步文献综述工作流编排器：研究缺口与 RQ → 检索策略 → 多通道检索与初筛 → 精读与提取 → 综合写作 → 统稿与格式。把已装的 literature-review-skill（YAN 五件套）、literature-review-skills（星塔五件套）、sr-screener、academic-paper、survey-writing、survey-abstract 与 AMiner 检索通道串成一条带门禁、有固定产物的流水线。支持从任意阶段进入：只有方向从 S1、已有题目从 S2、已有检索式从 S3、已有文献清单从 S4、已有提取表从 S5、已有初稿从 S6。用户说"做文献综述 / 开题综述 / 综述项目 / 从选题到成稿 / 从 S2 开始 / 检索策略表 / 初筛 / 提取表 / 研究缺口 / 帮我把综述流程搭起来"时触发。
 metadata:
-  version: "1.0.0"
-  updated: "2026-11-09"
+  version: "2.0.0"
+  updated: "2026-11-17"
 ---
 
 # 六步文献综述工作流（编排器）
@@ -78,13 +78,13 @@ S2 入口的 RQ 卡只要三行：题目、一句 RQ（对象 + 机制 + 边界�
 | S1 选题 | 星塔 `refine-literature-question` + `locate-review-research-gap` | `00_选题/研究缺口与RQ.md` | RQ 一句话可说清；缺口能对应到 RQ；3–5 个综述模块 |
 | S2 策略 | YAN `文献检索` | `01_检索/检索策略表.md`、`01_检索/检索日志.md` | 每个概念块有同义词；每行有库/检索式/限定/预计量；AMiner 预检有结论 |
 | S3 检索与初筛 | AMiner MCP（+ 手工库）+ `sr-screener` 或轻量筛选 | `01_检索/候选表.csv`、`02_筛选/筛选记录.md` | 候选表每条有 include/exclude + 排除码；PRISMA 计数闭合 |
-| S4 精读与提取 | YAN `文献精读` | `03_精读/提取表.csv`、`03_精读/notes/` | 纳入文献 100% 有提取行；局限列必填 |
-| S5 综合写作 | YAN `文献综述写作` + 星塔 `map-literature-contradictions` + `survey-writing`（含 CR-S / HLA-S）+ `nature-figure` | `04_综合/概念矩阵.md`、`04_综合/冲突地图.md`、`04_综合/figures/`、`05_成稿/提纲.md`、`05_成稿/初稿.md`、`05_成稿/审校记录.md` | 先定结构模式与提纲；taxonomy 过十篇盲测；每段 ≥2 篇对撞；每个 gap 挂到 RQ；图表计划逐张落地；每章过 CR-S / HLA-S |
-| S6 统稿与格式 | YAN `文献综述章节` + `survey-abstract` + `academic-paper`（citation-check） | `05_成稿/终稿.md`、`05_成稿/摘要.md`、`05_成稿/自检清单.md` | 引用 100% 可回溯；格式统一；摘要承诺逐条兑现；摘要过 CR-S；Boote & Beile 达线 |
+| S4 精读与提取 | YAN `文献精读` | `03_精读/提取表.csv`、`03_精读/论断证据.csv`、`03_精读/notes/` | 纳入文献 100% 有提取行；局限列必填；每篇至少 1 条 claim；台账无空 `conditions` |
+| S5 综合写作 | YAN `文献综述写作` + 星塔 `map-literature-contradictions` + `survey-writing`（含 CR-S / HLA-S）+ `nature-figure` | `04_综合/概念矩阵.md`、`04_综合/冲突地图.md`、`04_综合/figures/`、`05_成稿/提纲.md`、`05_成稿/初稿.md`、`05_成稿/审校记录.md` | 先用结构选择器定模式并写理由；只用一套主维度；taxonomy 过十篇盲测；综合性判断有 ≥2 条独立证据；每个强论断绑定 `claim_id`；每个 gap 挂到 RQ；图表逐张落地；每章过 CR-S / HLA-S |
+| S6 统稿与格式 | YAN `文献综述章节` + `survey-abstract` + `academic-paper`（citation-check） | `05_成稿/终稿.md`、`05_成稿/摘要.md`、`05_成稿/自检清单.md` | 引用 100% 可回溯；台账抽查通过；格式统一；摘要承诺逐条兑现；摘要过 CR-S；Boote & Beile 达线 |
 
 以上每个门禁都包含一道**导师审查（MR）**：先 MR PASS，再看该阶段自己的门禁。MR 的结论写进 `00_选题/导师审查.md`。
 
-写整篇综述时（不是只写一节），S5 按**结构模式一「新技术 × 旧问题」**（当前唯一模式），见 `references/survey-structure.md`；按 `assets/survey-outline-pattern1.md` 填完提纲再动笔。摘要放 S6，用 `survey-abstract` 的五段式收口。
+写整篇综述时，S5 **先跑结构选择器**（`references/survey-structure.md`）：从六种结构里选一个主导模式，写清理由与备选；模式 A「新技术 × 旧问题」只是可选之一，用 A 时按 `assets/survey-outline-pattern1.md` 填提纲。摘要放 S6，用 `survey-abstract` 的五段式收口。
 
 图表在 S5 落地：提纲里的图表计划逐张交给 `nature-figure`——数据图走它的 Python/R 绘图后端，结构图与 taxonomy 走矢量示意图路线，交付前跑它自带的 audit 脚本。出图存 `04_综合/figures/`，命名 `Fig1_xxx.pdf` + `.svg` + `.png`。
 
@@ -105,6 +105,7 @@ S2 入口的 RQ 卡只要三行：题目、一句 RQ（对象 + 机制 + 边界�
 ├─ 02_筛选/筛选记录.md
 ├─ 02_筛选/排除原因码.md
 ├─ 03_精读/提取表.csv
+├─ 03_精读/论断证据.csv
 ├─ 03_精读/notes/
 ├─ 04_综合/概念矩阵.md
 ├─ 04_综合/冲突地图.md

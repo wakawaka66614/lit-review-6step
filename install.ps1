@@ -32,7 +32,7 @@ foreach ($name in @("lit-review-6step", "survey-writing", "survey-abstract", "sh
     $src = Join-Path $root "skills\$name"
     if (-not (Test-Path -LiteralPath $src)) { throw "缺少 skills\$name，仓库不完整" }
     $dst = Join-Path $skillsDir $name
-    if (Test-Path -LiteralPath $dst) { Remove-Item -LiteralPath $dst -Recurse -Force }
+    if (Test-Path -LiteralPath $dst) { $bak = "$dst.bak-" + (Get-Date -Format "yyyyMMdd-HHmmss"); Move-Item -LiteralPath $dst -Destination $bak; Write-Host "  已备份旧版本: $bak" }
     Copy-Item -LiteralPath $src -Destination $dst -Recurse -Force
     Write-Host "  已安装 skill: $name"
 }

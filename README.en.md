@@ -18,6 +18,8 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 | Search is incomplete and undocumented | Search strategy table + search log + PRISMA counts |
 | Structure drifts while writing | Fill the outline first (two taxonomies + cross matrix), then write |
 | Drifting away from the topic | Topic contract + a mentor review (MR) at every stage gate |
+| Claims not traceable to evidence | Claim–Evidence ledger + four verification levels (full text / abstract / metadata / unverified) |
+| Rigid structure, categories invented to fit it | Structure selector: six patterns, pattern A is only one option |
 | Skipping stages breaks the ending | Entry contracts + recorded debt, paid back at S5/S6 |
 
 ## What's inside

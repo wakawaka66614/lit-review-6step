@@ -19,7 +19,7 @@ for name in lit-review-6step survey-writing survey-abstract shared; do
     echo "缺少 skills/$name，仓库不完整" >&2
     exit 1
   fi
-  rm -rf "$SKILLS/$name"
+  if [ -d "$SKILLS/$name" ]; then mv "$SKILLS/$name" "$SKILLS/$name.bak-$(date +%Y%m%d-%H%M%S)"; echo "  已备份旧版本: $name.bak-*"; fi
   cp -R "$ROOT/skills/$name" "$SKILLS/$name"
   echo "  已安装 skill: $name"
 done
