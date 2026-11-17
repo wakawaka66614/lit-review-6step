@@ -42,6 +42,7 @@
     "commands/lit-review-s2.md",
     "commands/survey-outline.md",
     "commands/survey-abstract.md",
-    "commands/mentor-check.md"
+    "commands/mentor-check.md",
+    "commands/audit-refs.md"
   ]
 }

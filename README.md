@@ -82,6 +82,18 @@ node scripts/check.mjs
 
 检查 7 项：catalog 与目录一致、frontmatter 完整、引用路径存在、README 覆盖、无个人路径、无密钥、install.ps1 编码。每个 skill 另有一份 `VALIDATION.md`，写清验证过什么、**没验证什么**。
 
+稿件层面的检查：
+
+```powershell
+node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
+  --manuscript 05_成稿/初稿.md `
+  --candidates 01_检索/候选表.csv `
+  --claims 03_精读/论断证据.csv `
+  --out 05_成稿/引用审计.md
+```
+
+查五类问题：未知文献 ID、引用未纳入文献、作者年份找不到、未核验 claim 进正文、摘要核验撑数字；另外列出“纳入但未引用”。启发式结果，仍需人工回原文核对。
+
 ## 依赖
 
 | 依赖 | 必须 | 用途 | 获取方式 |
