@@ -112,7 +112,8 @@ node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
 - 当前版本 **2.0.0**；仓库自检 44 项通过
 - 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
 - 对照测试计划见 `docs/E2E_TEST_PLAN.md`；检索阶段已跑：单查询覆盖 **3.3%**，多查询 + 引文追踪 **36.7%**（顶刊综述派生金标准，见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`）
-- **未做**：全流程 A/B/C（写出完整综述 + 人工评分）；`VALIDATION.md` 里如实标注了这一点
+- 写作阶段小试：无法回溯引用 **2 vs 0**（同模型直写 vs 流程产出，见 `RESULTS-writing.md`；非质量对照）
+- **未做**：独立评价人盲评的全流程 A/B/C；`VALIDATION.md` 里如实标注了这一点
 
 ## 依赖
 
