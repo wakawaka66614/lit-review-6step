@@ -79,3 +79,7 @@ node scripts/e2e-score.mjs --run e2e/<run>/runs/C --gold e2e/<run>/gold-set.csv
 ## 写作阶段小试
 
 另见 `RESULTS-writing.md`：同模型单次直写 vs 流程产出（可追溯性演示，非质量对照）。
+
+## 检索策略 A/B/C/D
+
+另见 `RESULTS-abcd.md`：控制预算后，多查询 @25 覆盖 0%，多查询+引文 @25 覆盖 13.3%，@194 覆盖 60%。

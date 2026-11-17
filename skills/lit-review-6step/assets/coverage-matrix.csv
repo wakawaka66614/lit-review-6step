@@ -1,0 +1,5 @@
+﻿direction,importance,classic_count,recent_count,fulltext_count,status,note
+图协同过滤,核心,3,8,5,充分,"经典与近期都有，全文 5 篇"
+知识图谱推荐,核心,2,6,3,基本充分,"缺 2026 新工作"
+动态图推荐,次要,1,2,0,不足,"无全文，写进挑战"
+公平性与隐私,次要,0,2,0,待补充,"仅两篇立场文"

@@ -11,6 +11,11 @@
 - **论断类型**：`claim_type`（Background / Definition / Empirical / Comparative / Causal / Limitation）与证据门槛
 - **质量评价分层**：`appraisal_status` / `appraisal_confidence`；摘要级阅读不得给正式质量等级
 - 修正 README / workflow 中“固定七节”的旧表述；核验等级统一为“四级核验 + 用户提供来源标签”
+- **覆盖审计**：`coverage-audit.md` + `audit-coverage.mjs` + `04_综合/覆盖矩阵.csv`，主题/方法/时间三维检查
+- **分类体检**：`audit-taxonomy.mjs` 检查单篇类别、“其他”占比、来源单一、纳入未分类
+- **多源合并**：`merge-results.mjs` 统一去重、分配 `paper_id`、保留来源链、标记出版状态（含撤稿）
+- **A/B/C/D 检索对照**：控制预算后，单查询 3.3%、多查询 0%、多查询+引文 13.3%、全量 60%
+- **测试报告**：`docs/V2.1_TEST_REPORT.md` 记录通过与失败项
 
 ## 2.0.0 — 2026-11-17
 

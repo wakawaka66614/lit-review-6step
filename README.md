@@ -18,19 +18,21 @@
 | 跳步导致后面塌 | 入口契约 + 欠账登记，S5/S6 回来补 |
 | 写着写着跑题 | 主题契约 + 每阶段导师审查（MR） |
 | 证据与论断对不上 | 统一 `paper_id` + 论断台账 + 段落证据映射 + 四级核验（全文 / 摘要 / 元数据 / 未核验） |
-| 证据不分强弱 | 研究质量评价：按设计选框架，输出高/中/低 + 依据 |
+| 证据不分强弱 | 研究质量评价：按设计选框架；摘要级只给“初步/未评价” |
 | 结构僵化、为结构造分类 | 结构选择器：六种模式里选一个，模式 A 只是可选之一 |
+| 文献够了其实不够 | 覆盖矩阵 + `audit-coverage`：主题/方法/时间三维查缺口 |
+| 分类看着整齐其实脆弱 | `audit-taxonomy`：单篇类别、其他占比、来源单一、纳入未分类 |
 
 ## 组成
 
 | 目录 | 内容 |
 |---|---|
-| `skills/lit-review-6step/` | 六步编排器：入口、门禁、结构选择器、论断台账、质量评价、AMiner/OpenAlex 通道、导师审查（MR）与主题契约 |
+| `skills/lit-review-6step/` | 六步编排器：入口、门禁、结构选择器、`paper_id` 台账、段落映射、覆盖审计、质量评价、AMiner/OpenAlex 通道、导师审查（MR）与主题契约 |
 | `skills/survey-writing/` | 综述正文：物种选择、taxonomy、图表规划、Gate A/B/C、CR-S / HLA-S 审校模型 |
 | `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
 | `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验；`用户提供` 是来源标签） |
 | `commands/` | 七个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
-| `scripts/` | 仓库自检 `check.mjs`；端到端脚手架 `e2e-init.mjs`、`e2e-score.mjs`；综述派生金标准 `gold-from-surveys.mjs` |
+| `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
 | `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
 | `templates/文献综述项目模板/` | 六步目录 + 候选表 / 原始结果 / 提取表 / 论断证据 / 文献关系表 + 契约 / 提纲 / 审校 / 自检模板 |
 | `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 重构记录 |
@@ -102,10 +104,18 @@ node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
   --manuscript 05_成稿/初稿.md `
   --candidates 01_检索/候选表.csv `
   --claims 03_精读/论断证据.csv `
+  --mapping 03_精读/段落证据映射.csv `
   --out 05_成稿/引用审计.md
 ```
 
-查五类问题：未知文献 ID、引用未纳入文献、作者年份找不到、未核验 claim 进正文、摘要核验撑数字；另外列出“纳入但未引用”。启发式结果，仍需人工回原文核对。
+查六类问题：未知 `paper_id`、引用未纳入文献、作者年份找不到（候选表缺作者时明确报“无法核验”）、未核验 claim 进正文、摘要核验撑数字、段落映射与 claim/paper 不一致；另外列重复 DOI、非法 DOI、“纳入但未引用”。
+
+分类与覆盖：
+
+```powershell
+node scripts/audit-taxonomy.mjs --taxonomy 04_综合/taxonomy.csv --candidates 01_检索/候选表.csv
+node scripts/audit-coverage.mjs --matrix 04_综合/覆盖矩阵.csv
+```
 
 ## 验证
 
