@@ -45,8 +45,10 @@ node scripts/e2e-init.mjs --topic "你的主题" --out e2e
 #    e2e/<slug>-<date>/gold-set.csv
 
 # 3. 三条条件各跑一遍，产物放 runs/A|B|C/
-# 4. 评分写 scores.csv
-# 5. 结论写 RESULTS.md
+# 4. 机械评分（覆盖率、未知引用、弱证据 claim）
+node scripts/e2e-score.mjs --run e2e/<slug>-<date>/runs/C --gold e2e/<slug>-<date>/gold-set.csv --out e2e/<slug>-<date>/scores-C.md
+
+# 5. 人工评分写 scores.csv，结论写 RESULTS.md
 ```
 
 ## 五、诚实边界

@@ -20,6 +20,7 @@
 | OpenAlex 引文 | `--mode cited-by` / `--mode references` | 分别返回 3 / 5 条，CSV 同构 |
 | OpenAlex 无 key 翻页 | `--pages 2 --per-page 5` | 用 page 模式成功；cursor 深翻需要 key（已提示） |
 | 端到端脚手架 | `e2e-init.mjs` + 一次检索试跑 | 目录、金标准模板、评分表生成；10 条记录 |
+| 端到端机械评分 | `e2e-score.mjs` + 2 条金标准 + 2 条候选的样例 | 覆盖率 50%、未知引用 1、弱证据 claim 1，符合预期 |
 
 ## 未验证
 
