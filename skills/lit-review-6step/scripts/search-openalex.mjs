@@ -46,14 +46,20 @@ function buildFilter(args) {
   return parts.join(',');
 }
 
-async function getJson(url, mailto) {
+async function getJson(url, args) {
   const u = new URL(url);
-  if (mailto) u.searchParams.set('mailto', mailto);
+  if (args.mailto) u.searchParams.set('mailto', args.mailto);
+  const key = args.apiKey || process.env.OPENALEX_API_KEY;
+  if (key) u.searchParams.set('api_key', key);
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const res = await fetch(u, { headers: { 'user-agent': 'lit-review-6step/2.0' } });
     if (res.ok) return res.json();
     if (res.status === 429) { await sleep(1500 * (attempt + 1)); continue; }
-    throw new Error(`HTTP ${res.status} ${u.pathname}`);
+    const body = await res.text().catch(() => '');
+    if (res.status === 401 || res.status === 403) {
+      throw new Error(`HTTP ${res.status}：无 key 的共享日预算可能已用完。到 openalex.org 申请免费 key，用 --api-key 或环境变量 OPENALEX_API_KEY。响应：${body.slice(0, 160)}`);
+    }
+    throw new Error(`HTTP ${res.status} ${u.pathname}：${body.slice(0, 160)}`);
   }
   throw new Error('多次重试仍失败');
 }
@@ -86,43 +92,53 @@ function toRow(work, idx, query, mode) {
   };
 }
 
-async function collectSearch(args, query) {
+function hasKey(args) {
+  return Boolean(args.apiKey || process.env.OPENALEX_API_KEY);
+}
+
+async function fetchPaged(args, baseParams) {
   const rows = [];
-  let cursor = '*';
-  for (let page = 0; page < args.pages && rows.length < args.max; page += 1) {
-    const params = new URLSearchParams();
-    params.set('search', query);
-    params.set('per-page', String(args.perPage));
-    params.set('cursor', cursor);
-    if (args.sort && args.sort !== 'relevance_score') params.set('sort', args.sort);
-    const filter = buildFilter(args);
-    if (filter) params.set('filter', filter);
-    const data = await getJson(`${API}/works?${params}`, args.mailto);
-    for (const w of data.results || []) rows.push(w);
-    cursor = data.meta && data.meta.next_cursor;
-    if (!cursor || !(data.results || []).length) break;
+  if (hasKey(args)) {
+    let cursor = '*';
+    for (let p = 0; p < args.pages && rows.length < args.max; p += 1) {
+      const params = new URLSearchParams(baseParams);
+      params.set('per-page', String(args.perPage));
+      params.set('cursor', cursor);
+      const data = await getJson(`${API}/works?${params}`, args);
+      for (const w of data.results || []) rows.push(w);
+      cursor = data.meta && data.meta.next_cursor;
+      if (!cursor || !(data.results || []).length) break;
+    }
+  } else {
+    for (let p = 1; p <= args.pages && rows.length < args.max; p += 1) {
+      const params = new URLSearchParams(baseParams);
+      params.set('per-page', String(args.perPage));
+      params.set('page', String(p));
+      const data = await getJson(`${API}/works?${params}`, args);
+      for (const w of data.results || []) rows.push(w);
+      if (!(data.results || []).length) break;
+    }
   }
   return rows;
+}
+
+async function collectSearch(args, query) {
+  const base = new URLSearchParams();
+  base.set('search', query);
+  if (args.sort && args.sort !== 'relevance_score') base.set('sort', args.sort);
+  const filter = buildFilter(args);
+  if (filter) base.set('filter', filter);
+  return fetchPaged(args, base);
 }
 
 async function collectCitedBy(args, id) {
-  const rows = [];
-  let cursor = '*';
-  for (let page = 0; page < args.pages && rows.length < args.max; page += 1) {
-    const params = new URLSearchParams();
-    params.set('filter', [buildFilter(args), `cites:${id}`].filter(Boolean).join(','));
-    params.set('per-page', String(args.perPage));
-    params.set('cursor', cursor);
-    const data = await getJson(`${API}/works?${params}`, args.mailto);
-    for (const w of data.results || []) rows.push(w);
-    cursor = data.meta && data.meta.next_cursor;
-    if (!cursor || !(data.results || []).length) break;
-  }
-  return rows;
+  const base = new URLSearchParams();
+  base.set('filter', [buildFilter(args), `cites:${id}`].filter(Boolean).join(','));
+  return fetchPaged(args, base);
 }
 
 async function collectReferences(args, id) {
-  const work = await getJson(`${API}/works/${id}`, args.mailto);
+  const work = await getJson(`${API}/works/${id}`, args);
   const refs = (work.referenced_works || []).map((u) => u.split('/').pop()).filter(Boolean);
   const rows = [];
   for (let i = 0; i < refs.length && rows.length < args.max; i += 50) {
@@ -130,7 +146,7 @@ async function collectReferences(args, id) {
     const params = new URLSearchParams();
     params.set('filter', `openalex_id:${chunk.join('|')}`);
     params.set('per-page', '50');
-    const data = await getJson(`${API}/works?${params}`, args.mailto);
+    const data = await getJson(`${API}/works?${params}`, args);
     for (const w of data.results || []) rows.push(w);
     await sleep(120);
   }

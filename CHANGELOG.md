@@ -15,6 +15,7 @@
 - **新增引用与事实审计脚本**：`skills/lit-review-6step/scripts/audit-refs.mjs`，查未知 ID、未纳入引用、作者年份、claim 核验等级，输出 `05_成稿/引用审计.md`
 - **新增 OpenAlex 检索通道**：`scripts/search-openalex.mjs`，支持检索、前向引文、后向引文，输出与原始检索结果同构的 CSV；新增 `references/channels.md` 与 `/search-openalex` 命令
 - **摘要去模板化**：保留五个功能，取消固定比例（50–65%）、强制 `However` 与“数字即可信度”的要求；CS 六句改为“示例，非必选”
+- **新增端到端测试基础设施**：`docs/E2E_TEST_PLAN.md`、`scripts/e2e-init.mjs`、试跑记录 `e2e/…/RESULTS.md`；OpenAlex 无 key 时改用 page 翻页并提示 key
 - 安装脚本改为**备份旧版本**而非删除；主 SKILL 版本统一为 2.0.0
 - 修正 HLA-S 示例中无来源的“12%”数字；修正 Gate B 的摘要时序（先蓝图、后正式摘要）；修正 README 与 workflow 中把模式 A 当默认的旧表述
 
