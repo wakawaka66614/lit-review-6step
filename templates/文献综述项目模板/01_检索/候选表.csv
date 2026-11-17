@@ -1,1 +1,1 @@
-﻿id,channel,query,title,year,venue,authors,doi,citations,url,lang,included,exclude_code,note
+﻿paper_id,source,source_id,doi,title,authors,year,venue,included,exclude_code,channel,query,citations,url,lang,note

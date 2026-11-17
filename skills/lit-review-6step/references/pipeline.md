@@ -26,15 +26,15 @@
 ### S4（已有文献清单）
 
 - **必须**：清单含标题、年份、来源（期刊 / 会议 / 预印本），并已标明纳入。
-- **动作**：重建候选表——逐条分配 id、`channel=user`、`included=1`、`note=用户提供`；缺 DOI 的留空并在 note 标注；再进精读。
-- **校验**：清单条数 = 候选表行数；id 唯一。
+- **动作**：重建候选表——逐条分配 `paper_id`（P0001）、`source=manual`、`included=1`、`note=用户提供`；缺 DOI 的留空并在 note 标注；再进精读。
+- **校验**：清单条数 = 候选表行数；`paper_id` 唯一。
 - **欠账**：`入口=S4；欠账=PRISMA 计数与筛选透明度`。
 
 ### S5（已有提取表）
 
-- **必须**：提取表含 id 与至少 title / year / venue。
-- **动作**：按 id 反推候选表（`channel=user`、`included=1`）；提取表缺的题录从候选表补。
-- **校验**：提取表 id 唯一；候选表覆盖全部 id。
+- **必须**：提取表含 `paper_id` 与至少 title / year / venue。
+- **动作**：按 `paper_id` 反推候选表（`source=manual`、`included=1`）；提取表缺的题录从候选表补。
+- **校验**：提取表 `paper_id` 唯一；候选表覆盖全部 `paper_id`。
 - **欠账**：`入口=S5；欠账=筛选与检索记录`。
 
 ### S6（已有初稿）
@@ -117,8 +117,9 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 2. AMiner：每个查询取 2–3 页（10 条/页），`order=n_citation` 取奠基，`order=year` 取前沿；期刊定向用 `search_papers_by_venue`，核心作者用 `search_papers_by_author`。
 3. 引文追踪：对 5–10 篇种子做前向/后向扩展（OpenAlex `--mode cited-by` / `--mode references`，或手工），记录种子、方向、工具、新增数。
 4. 去重：DOI 优先；无 DOI 时标题归一化（小写、去标点、去空格）。
-5. 分阶段筛选：题摘筛选（E1–E4）→ 全文获取（E6 未获取，单独计数）→ 资格评估（E7 违反预设标准）。
-6. 统计 PRISMA 2020 分阶段计数，闭合校验见 `assets/search-log.md`。
+5. **分配主键**：去重后逐条分配 `paper_id`（P0001 递增），保留来源 `source` / `source_id` / `discovery`（哪条查询或哪次引文追踪发现），同一论文多来源时合并为一行、在 `note` 记来源链。
+6. 分阶段筛选：题摘筛选（E1–E4）→ 全文获取（E6 未获取，单独计数）→ 资格评估（E7 违反预设标准）。
+7. 统计 PRISMA 2020 分阶段计数，闭合校验见 `assets/search-log.md`。
 
 **产物** `01_检索/原始检索结果.csv`、`01_检索/候选表.csv`、`02_筛选/筛选记录.md`。
 
@@ -134,11 +135,11 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 
 **建台账**：把每篇的 `findings` 拆成可判断真假的论断，写入 `03_精读/论断证据.csv`（字段与规则见 `references/claim-evidence.md`）。一个论断一行证据；`conditions` 必填；`verification` 按四级标（全文 / 摘要 / 元数据 / 未核验）。
 
-**评质量**：按 `references/quality-appraisal.md` 选对应设计的框架，在提取表填 `design`、`quality`（高/中/低）、`quality_notes`（1–2 句依据）。不搞全学科统一评分表，也不给论文排名。
+**评质量**：按 `references/quality-appraisal.md` 选对应设计的框架，在提取表填 `design`、`quality`、`quality_notes`、`appraisal_status`、`appraisal_confidence`。**摘要级阅读只能标记“未评价/部分完成/低置信”**，不能直接给高/中/低正式等级。
 
-**字段**：研究目的 / 方法 / 样本或数据 / 关键发现 / 局限 / 与我的 RQ 的关系 / 可引用原句 + 页码 / 设计类型 / 质量评级。
+**字段**：`paper_id` / 研究目的 / 方法 / 样本或数据 / 关键发现 / 局限 / 与 RQ 的关系 / 可引用原句 + 页码 / 设计类型 / 质量评级 / 评价状态与置信度。
 
-**门禁**：候选表 `included=1` 的每一篇都有提取行；"局限"列为空的行退回重读；每篇至少贡献 1 条 claim；台账里没有空 `conditions`；每篇有 `quality` 与依据。
+**门禁**：候选表 `included=1` 的每一篇都有提取行；"局限"列为空的行退回重读；每篇至少贡献 1 条 claim；台账里没有空 `conditions`；质量评级与阅读深度一致（摘要级不得给正式等级）。
 
 ---
 
@@ -174,7 +175,7 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 
 **动作**：逻辑链（问题 → 已知 → 争议 → 缺口 → RQ）→ 过渡句 → 术语与时态统一 → 格式统一（GB/T 7714 或 APA，全文一种）→ 引文与参考文献一一对应。
 
-**核台账**：先跑 `scripts/audit-refs.mjs`（安装后在 `.dsh/skills/lit-review-6step/scripts/`）自动扫未知 ID、未纳入引用、作者年份、claim 核验等级，报告写入 `05_成稿/引用审计.md`；再人工抽查 10 条强论断，正文句子、`论断证据.csv` 行、原文三处对得上；检查 `conditions` 有没有被省略、`摘要核验` 有没有被用来支撑方法细节或数字、`support=反对` 的证据有没有进冲突地图。
+**核台账**：先跑 `audit-refs.mjs`（安装后在 `.dsh/skills/lit-review-6step/scripts/`），带 `--mapping 03_精读/段落证据映射.csv`，自动扫未知 `paper_id`、未纳入引用、作者年份、claim 核验等级与映射一致性，报告写入 `05_成稿/引用审计.md`；再人工抽查 10 条强论断，正文句子、`论断证据.csv` 行、原文三处对得上；检查 `conditions` 有没有被省略、`摘要核验` 有没有被用来支撑方法细节或数字、`support=反对` 的证据有没有进冲突地图。
 
 **门禁**：Boote & Beile 12 条打分（博士 ≥18/24，硕士 ≥15/24）；随机抽 10 条引用回原文核对，错 1 条就全表复查；台账核验无“摘要核验撑数字”的情况。
 

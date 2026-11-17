@@ -1,6 +1,4 @@
-﻿claim_id,claim_text,paper_id,evidence_id,location,evidence_type,support,conditions,verification,note
-C001,图卷积可缓解新商品冷启动,AM-0001,E001,第 7 页 表 3,实验,部分支持,2 个电商数据集；静态图；Recall@20,全文核验,只在静态图成立
-C001,图卷积可缓解新商品冷启动,AM-0007,E002,第 11 页,实验,强支持,1 个工业数据集；长尾商品,摘要核验,摘要未给方差
-C002,知识增强对稀疏用户更有效,WOS-0012,E003,第 5 页 表 2,实验,强支持,2 个公开数据集；稀疏组,全文核验,与 C001 不冲突
-C003,现有方法普遍未建模兴趣漂移,AM-0021,E004,第 2 页,综述,部分支持,120 篇综述范围,全文核验,综述性判断，需补原始文献
-C004,图方法在长尾场景优于序列模型,AM-0007,E005,第 11 页,实验,反对,工业数据；曝光指标,摘要核验,与 C001 方向相反，进冲突地图
+﻿claim_id,claim_text,claim_type,paper_id,evidence_id,location,evidence_type,support,conditions,verification,note
+C001,图卷积可缓解新商品冷启动,Empirical,P0001,E001,第 7 页 表 3,实验,部分支持,2 个电商数据集；静态图；Recall@20,全文核验,只在静态图成立
+C002,知识增强对稀疏用户更有效,Comparative,P0002,E002,摘要,实验,强支持,2 个公开数据集；稀疏组,摘要核验,摘要未给方差
+C003,现有方法普遍未建模兴趣漂移,Limitation,P0003,E003,第 2 页,综述,部分支持,120 篇综述范围,全文核验,综述性判断需补原始文献

@@ -64,7 +64,8 @@ const runDir = path.resolve(args.run);
 const candidatesFile = readFirst(runDir, ['01_检索/候选表.csv', 'candidates.csv']);
 const candidates = candidatesFile ? parseCsv(candidatesFile.text) : [];
 const candDois = new Set(candidates.map((c) => normDoi(c.doi)).filter(Boolean));
-const candIds = new Set(candidates.map((c) => c.id).filter(Boolean));
+const candIds = new Set(candidates.map((c) => (c.paper_id || c.id || '').trim()).filter(Boolean));
+const candSourceIds = new Set(candidates.map((c) => (c.source_id || '').trim()).filter(Boolean));
 
 // 覆盖率
 let coverage = null;
@@ -83,9 +84,13 @@ let citedIds = [];
 let unknownIds = [];
 let citedClaims = [];
 if (manuscript) {
-  citedIds = [...new Set([...manuscript.text.matchAll(/\b(?:AM|WOS|CNKI|GS|PS|R)-\d{3,4}\b/g)].map((m) => m[0]))];
-  unknownIds = citedIds.filter((id) => !candIds.has(id));
-  citedClaims = [...new Set([...manuscript.text.matchAll(/\bC\d{3,4}\b/g)].map((m) => m[0]))];
+  const ids = [
+    ...manuscript.text.matchAll(/\bP\d{3,5}\b/g),
+    ...manuscript.text.matchAll(/\b(?:AM|WOS|CNKI|GS|PS|R)-\d{3,4}\b/g),
+  ].map((m) => m[0]);
+  citedIds = [...new Set(ids)];
+  unknownIds = citedIds.filter((id) => !candIds.has(id) && !candSourceIds.has(id));
+  citedClaims = [...new Set([...manuscript.text.matchAll(/\bC\d{3,5}\b/g)].map((m) => m[0]))];
 }
 
 const claimsFile = readFirst(runDir, ['03_精读/论断证据.csv']);

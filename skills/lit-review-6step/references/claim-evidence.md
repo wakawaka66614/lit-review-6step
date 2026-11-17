@@ -20,14 +20,26 @@
 |---|---|
 | `claim_id` | C001 递增 |
 | `claim_text` | 一句可判断真假的论断，不写“效果很好” |
-| `paper_id` | 候选表 ID（AM-0001） |
+| `claim_type` | Background / Definition / Empirical / Comparative / Causal / Limitation |
+| `paper_id` | 候选表 **paper_id**（P0001），不再用来源前缀 |
 | `evidence_id` | E001 递增，指向具体证据 |
 | `location` | 页码 / 章节 / 表号 |
 | `evidence_type` | 实验 / 理论 / 案例 / 综述 / 数据集 |
 | `support` | 强支持 / 部分支持 / 反对 / 无关 |
 | `conditions` | 数据集、任务、模型、场景——**必填** |
-| `verification` | 全文核验 / 摘要核验 / 元数据核验 / 未核验 |
+| `verification` | 全文核验 / 摘要核验 / 元数据核验 / 未核验（`用户提供` 是来源标签，不是核验等级） |
 | `note` | 待核、冲突、提醒 |
+
+## 论断类型与证据门槛
+
+| 类型 | 含义 | 最低证据要求 |
+|---|---|---|
+| Background | 背景事实 | 综述或元数据即可，但不得写成具体数字 |
+| Definition | 概念定义 | 经典文献或权威综述 |
+| Empirical | 实验结论 | 全文核验；数字必须能指到表/页 |
+| Comparative | 比较结论 | 全文核验；条件必须可比 |
+| Causal | 因果判断 | 全文核验 + 机制证据；不能靠两组结果的相关性 |
+| Limitation | 局限判断 | 全文核验或权威综述，需写清范围 |
 
 ## 五条规则
 
@@ -51,6 +63,23 @@
 ```
 
 正文里的每个强论断（“X 能改善 Y”“A 优于 B”）都必须能指回一个 `claim_id`。背景性陈述可以引用综述或定义，不强制。
+
+## 段落—证据映射
+
+正文不暴露 `claim_id`，但内部要能追溯。另建 `03_精读/段落证据映射.csv`：
+
+| paragraph_id | section | claim_id | paper_id | verification | text_anchor |
+|---|---|---|---|---|---|
+| P01 | 3.1 | C001 | P0001 | 全文核验 | 段首句“图方法在冷启动…” |
+| P02 | 3.2 | C007 | P0008 | 摘要核验 | 段首句“LightGCN 进一步指出…” |
+
+规则：
+
+1. 每个 Empirical / Comparative / Causal 段落至少一行映射；
+2. 映射的 `paper_id` 必须等于 claim 的 `paper_id`；
+3. 映射的 `verification` 必须与 claim 一致；
+4. `text_anchor` 写段首句或小标题，便于回查原文；
+5. `audit-refs --mapping` 会校验这三项，不一致就报错或警告。
 
 ## S6 审计
 

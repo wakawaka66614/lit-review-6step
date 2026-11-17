@@ -1,2 +1,2 @@
-﻿id,title,year,venue,doi,purpose,method,sample,findings,limitations,relevance,quote,page,note,design,quality,quality_notes
-AM-0001,示例标题,2024,示例期刊,10.0000/example,研究目的,方法,样本或数据,关键发现,局限,与 RQ 的关系,可引用原句,页码,备注,计算实验,中,单数据集、缺消融
+﻿paper_id,title,year,venue,doi,purpose,method,sample,findings,limitations,relevance,quote,page,note,design,quality,quality_notes,appraisal_status,appraisal_confidence
+P0001,示例标题,2024,示例期刊,10.0000/example,研究目的,方法,样本或数据,关键发现,局限,与 RQ 的关系,可引用原句,页码,备注,计算实验,中,单数据集、缺消融,部分完成,中

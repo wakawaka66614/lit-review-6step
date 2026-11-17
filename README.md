@@ -2,7 +2,7 @@
 
 [English](README.en.md) | **简体中文**
 
-把文献综述拆成六个可验收的阶段：**选题 → 检索策略 → 检索与初筛 → 精读提取 → 综合写作 → 统稿**。每个阶段有固定产物和门禁，支持从任意阶段进入；成稿按「新技术 × 旧问题」的七节骨架写。
+把文献综述拆成六个可验收的阶段：**选题 → 检索策略 → 检索与初筛 → 精读提取 → 综合写作 → 统稿**。每个阶段有固定产物和门禁，支持从任意阶段进入；成稿结构从六种模式里选（模式 A 用七节骨架）。
 
 一套 [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) 格式的技能包，纯 Markdown，无运行时依赖。
 
@@ -17,7 +17,7 @@
 | 结构漂移、边写边改 | 先跑结构选择器、填提纲再动笔 |
 | 跳步导致后面塌 | 入口契约 + 欠账登记，S5/S6 回来补 |
 | 写着写着跑题 | 主题契约 + 每阶段导师审查（MR） |
-| 证据与论断对不上 | 论断—证据台账 + 四级核验（全文 / 摘要 / 元数据 / 未核验） |
+| 证据与论断对不上 | 统一 `paper_id` + 论断台账 + 段落证据映射 + 四级核验（全文 / 摘要 / 元数据 / 未核验） |
 | 证据不分强弱 | 研究质量评价：按设计选框架，输出高/中/低 + 依据 |
 | 结构僵化、为结构造分类 | 结构选择器：六种模式里选一个，模式 A 只是可选之一 |
 
@@ -28,7 +28,7 @@
 | `skills/lit-review-6step/` | 六步编排器：入口、门禁、结构选择器、论断台账、质量评价、AMiner/OpenAlex 通道、导师审查（MR）与主题契约 |
 | `skills/survey-writing/` | 综述正文：物种选择、taxonomy、图表规划、Gate A/B/C、CR-S / HLA-S 审校模型 |
 | `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
-| `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验） |
+| `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验；`用户提供` 是来源标签） |
 | `commands/` | 七个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
 | `scripts/` | 仓库自检 `check.mjs`；端到端脚手架 `e2e-init.mjs`、`e2e-score.mjs`；综述派生金标准 `gold-from-surveys.mjs` |
 | `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
@@ -109,7 +109,7 @@ node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
 
 ## 验证
 
-- 当前版本 **2.0.0**；仓库自检 44 项通过
+- 当前版本 **2.1.0**；仓库自检 44 项通过
 - 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
 - 对照测试计划见 `docs/E2E_TEST_PLAN.md`；检索阶段已跑：单查询覆盖 **3.3%**，多查询 + 引文追踪 **36.7%**（顶刊综述派生金标准，见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`）
 - 写作阶段小试：无法回溯引用 **2 vs 0**（同模型直写 vs 流程产出，见 `RESULTS-writing.md`；非质量对照）

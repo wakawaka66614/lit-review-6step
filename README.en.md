@@ -99,7 +99,7 @@ Seven checks: catalog matches directories, frontmatter complete, referenced path
 
 ## Validation
 
-- Version **2.0.0**; repo self-check passes 44 items
+- Version **2.1.0**; repo self-check passes 44 items
 - Script-level records in `skills/lit-review-6step/VALIDATION.md` (audit, OpenAlex, installer, scoring)
 - Comparison plan in `docs/E2E_TEST_PLAN.md`; retrieval stage has run: single query covers **3.3%**, multi-query + citation tracking **36.7%** (survey-derived gold set, see `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`)
 - Writing-stage pilot: unresolvable citations **2 vs 0** (same model, direct write vs pipeline output; see `RESULTS-writing.md`; not a quality comparison)

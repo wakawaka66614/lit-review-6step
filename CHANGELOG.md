@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0 — 2026-11-17
+
+按第二轮审查意见修数据与审计可靠性（见 `docs/REVISION_PLAN_v2.1_2026-11-17.md`）。
+
+- **统一 `paper_id`**：候选表主键改为 `P0001`，新增 `source` / `source_id`；提取表、台账、正文、映射统一引用
+- **重写 `audit-refs.mjs`**：从候选表主键识别引用，不再靠前缀正则；支持任意格式主键、`--mapping` 段落映射校验
+- **修复 `e2e-score.mjs`**：支持 `P0001` 与 `source_id`，不再漏算 C-XXXX 历史编号
+- **新增段落—证据映射**：`03_精读/段落证据映射.csv`，正文 → claim → paper → 页码可追溯
+- **论断类型**：`claim_type`（Background / Definition / Empirical / Comparative / Causal / Limitation）与证据门槛
+- **质量评价分层**：`appraisal_status` / `appraisal_confidence`；摘要级阅读不得给正式质量等级
+- 修正 README / workflow 中“固定七节”的旧表述；核验等级统一为“四级核验 + 用户提供来源标签”
+
 ## 2.0.0 — 2026-11-17
 
 按 `docs/REVISION_PLAN_v2_2026-11-17.md` 重构核心设计。

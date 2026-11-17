@@ -1,3 +1,3 @@
-id,channel,query,title,year,venue,authors,doi,citations,url,lang,included,exclude_code,note
-AM-0001,aminer,"keyword: retrieval augmented generation; order=n_citation",示例标题：检索增强生成综述,2024,示例期刊,"张三; 李四",10.0000/example,120,https://example.org,en,1,,奠基文献，需读全文
-WOS-0001,wos,"TS=(digital transformation AND SME*)",中小企业数字化转型研究,2023,管理世界,"王五",,45,,zh,0,E1,主题是组织变革，与本 RQ 无关
+﻿paper_id,source,source_id,doi,title,authors,year,venue,included,exclude_code,channel,query,citations,url,lang,note
+P0001,openalex,W2807021761,10.1145/3219819.3219890,"Graph Convolutional Neural Networks for Web-Scale Recommender Systems","Rex Ying; Ruining He; Kaixiang Chen; Pong Eksombatchai; William L. Hamilton; Jure Leskovec",2018,KDD,1,,openalex,"graph neural network recommendation",4879,https://openalex.org/W2807021761,en,
+P0002,aminer,5f2a1c3d,10.1145/3397271.3401063,"LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation","Xiangnan He; Kuan Deng; Xiang Wang; Yan Li; Yongdong Zhang; Meng Wang",2020,SIGIR,1,,aminer,graph collaborative filtering,2100,https://www.aminer.cn/pub/5f2a1c3d,en,

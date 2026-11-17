@@ -1,0 +1,3 @@
+﻿paragraph_id,section,claim_id,paper_id,verification,text_anchor,note
+P01,3.1,C001,P0001,全文核验,"LightGCN 进一步指出…","段落首句"
+P02,3.2,C007,P0008,摘要核验,"…","仅摘要"
