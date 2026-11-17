@@ -1,1 +1,11 @@
 id,doi,title,year,venue,why_core,verified_by
+SD-001,10.1145/3308558.3313417,"Knowledge Graph Convolutional Networks for Recommender Systems",2019,"International World Wide Web Conference (WWW)","被 3 篇顶刊综述引用；被引 1422",survey-derived
+SD-002,10.1145/3269206.3271739,"RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems",2018,"ACM International Conference on Information and Knowledge Management (CIKM)","被 3 篇顶刊综述引用；被引 1420",survey-derived
+SD-003,10.1109/tkde.2020.3028705,"A Survey on Knowledge Graph-Based Recommender Systems",2020,"IEEE Transactions on Knowledge and Data Engineering","被 2 篇顶刊综述引用；被引 1278",survey-derived
+SD-004,10.1145/3397271.3401072,"Multi-behavior Recommendation with Graph Convolutional Networks",2020,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 2 篇顶刊综述引用；被引 533",survey-derived
+SD-005,10.1145/3308558.3313442,"Dual Graph Attention Networks for Deep Latent Representation of Multifaceted Social Effects in Recommender Systems",2019,"International World Wide Web Conference (WWW)","被 2 篇顶刊综述引用；被引 417",survey-derived
+SD-006,10.1145/3340531.3411947,"Multi-modal Knowledge Graphs for Recommender Systems",2020,"ACM International Conference on Information and Knowledge Management (CIKM)","被 2 篇顶刊综述引用；被引 395",survey-derived
+SD-007,10.24963/ijcai.2019/592,"STAR-GCN: Stacked and Reconstructed Graph Convolutional Networks for Recommender Systems",2019,"International Joint Conference on Artificial Intelligence","被 2 篇顶刊综述引用；被引 321",survey-derived
+SD-008,10.1145/3308558.3313607,"Jointly Learning Explainable Rules for Recommendation with Knowledge Graph",2019,"International World Wide Web Conference (WWW)","被 2 篇顶刊综述引用；被引 286",survey-derived
+SD-009,10.1016/j.aiopen.2022.03.002,"A survey on heterogeneous information network based recommender systems: Concepts, methods, applications and resources",2022,"AI Open","被 2 篇顶刊综述引用；被引 93",survey-derived
+SD-010,10.1109/ictai.2019.00183,"Graph Attention Networks for Neural Social Recommendation",2019,"IEEE International Conference on Tools with Artificial Intelligence (ICTAI)","被 2 篇顶刊综述引用；被引 48",survey-derived

@@ -1,0 +1,31 @@
+id,doi,title,year,venue,why_core,verified_by
+SD-001,10.17863/cam.48429,"Graph Attention Networks",2017,"arXiv (Cornell University)","被 3 篇顶刊综述引用；被引 27701",survey-derived
+SD-002,10.48550/arxiv.1706.02216,"Inductive Representation Learning on Large Graphs",2017,"arXiv (Cornell University)","被 3 篇顶刊综述引用；被引 23810",survey-derived
+SD-003,10.1109/tnnls.2020.2978386,"A Comprehensive Survey on Graph Neural Networks",2020,"IEEE Transactions on Neural Networks and Learning Systems","被 3 篇顶刊综述引用；被引 15705",survey-derived
+SD-004,10.1109/mc.2009.263,"Matrix Factorization Techniques for Recommender Systems",2009,"Computer","被 3 篇顶刊综述引用；被引 14125",survey-derived
+SD-005,10.1016/j.aiopen.2021.01.001,"Graph neural networks: A review of methods and applications",2020,"AI Open","被 3 篇顶刊综述引用；被引 9223",survey-derived
+SD-006,10.1145/3397271.3401063,"LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation",2020,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 3 篇顶刊综述引用；被引 6799",survey-derived
+SD-007,10.1145/2959100.2959190,"Deep Neural Networks for YouTube Recommendations",2016,"ACM Conference on Recommender Systems (RecSys)","被 3 篇顶刊综述引用；被引 5009",survey-derived
+SD-008,10.1145/3219819.3219890,"Graph Convolutional Neural Networks for Web-Scale Recommender Systems",2018,"ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)","被 3 篇顶刊综述引用；被引 4879",survey-derived
+SD-009,10.1145/3331184.3331267,"Neural Graph Collaborative Filtering",2019,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 3 篇顶刊综述引用；被引 4793",survey-derived
+SD-010,10.1145/3292500.3330989,"KGAT: Knowledge Graph Attention Network for Recommendation",2019,"ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)","被 3 篇顶刊综述引用；被引 2843",survey-derived
+SD-011,10.1609/aaai.v33i01.33013558,"Hypergraph Neural Networks",2019,"Proceedings of the AAAI Conference on Artificial Intelligence","被 3 篇顶刊综述引用；被引 2800",survey-derived
+SD-012,10.1609/aaai.v33i01.3301346,"Session-Based Recommendation with Graph Neural Networks",2019,"Proceedings of the AAAI Conference on Artificial Intelligence","被 3 篇顶刊综述引用；被引 2371",survey-derived
+SD-013,10.1145/3404835.3462862,"Self-supervised Graph Learning for Recommendation",2021,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 3 篇顶刊综述引用；被引 2263",survey-derived
+SD-014,10.1145/3308558.3313417,"Knowledge Graph Convolutional Networks for Recommender Systems",2019,"International World Wide Web Conference (WWW)","被 3 篇顶刊综述引用；被引 1422",survey-derived
+SD-015,10.1145/3269206.3271739,"RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems",2018,"ACM International Conference on Information and Knowledge Management (CIKM)","被 3 篇顶刊综述引用；被引 1420",survey-derived
+SD-016,10.1145/3397271.3401137,"Disentangled Graph Collaborative Filtering",2020,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 3 篇顶刊综述引用；被引 899",survey-derived
+SD-017,10.1145/3331184.3331214,"A Neural Influence Diffusion Model for Social Recommendation",2019,"International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR)","被 3 篇顶刊综述引用；被引 705",survey-derived
+SD-018,10.1145/3289600.3290989,"Session-Based Social Recommendation via Dynamic Graph Attention Networks",2019,"ACM International Conference on Web Search and Data Mining (WSDM)","被 3 篇顶刊综述引用；被引 565",survey-derived
+SD-019,10.1145/3357384.3358010,"Rethinking the Item Order in Session-based Recommendation with Graph Neural Networks",2019,"ACM International Conference on Information and Knowledge Management (CIKM)","被 3 篇顶刊综述引用；被引 470",survey-derived
+SD-020,10.1162/neco.1997.9.8.1735,"Long Short-Term Memory",1997,"Neural Computation","被 2 篇顶刊综述引用；被引 131382",survey-derived
+SD-021,10.48550/arxiv.1609.02907,"Semi-Supervised Classification with Graph Convolutional Networks",2016,"arXiv (Cornell University)","被 2 篇顶刊综述引用；被引 41982",survey-derived
+SD-022,10.1145/3038912.3052569,"Neural Collaborative Filtering",2017,"International World Wide Web Conference (WWW)","被 2 篇顶刊综述引用；被引 8816",survey-derived
+SD-023,10.1109/icdm.2018.00035,"Self-Attentive Sequential Recommendation",2018,"Proceedings","被 2 篇顶刊综述引用；被引 5228",survey-derived
+SD-024,10.1145/2988450.2988454,"Wide & Deep Learning for Recommender Systems",2016,"Workshop on Deep Learning for Recommender Systems (DLRS)","被 2 篇顶刊综述引用；被引 4943",survey-derived
+SD-025,10.48550/arxiv.1902.07153,"Simplifying Graph Convolutional Networks",2019,"arXiv (Cornell University)","被 2 篇顶刊综述引用；被引 4332",survey-derived
+SD-026,10.1145/3357384.3357895,"BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer",2019,"ACM International Conference on Information and Knowledge Management (CIKM)","被 2 篇顶刊综述引用；被引 4303",survey-derived
+SD-027,10.1145/3308558.3313488,"Graph Neural Networks for Social Recommendation",2019,"International World Wide Web Conference (WWW)","被 2 篇顶刊综述引用；被引 2787",survey-derived
+SD-028,10.1016/j.acha.2010.04.005,"Wavelets on graphs via spectral graph theory",2010,"Applied and Computational Harmonic Analysis","被 2 篇顶刊综述引用；被引 2622",survey-derived
+SD-029,10.1145/3535101,"Graph Neural Networks in Recommender Systems: A Survey",2022,"ACM Computing Surveys","被 2 篇顶刊综述引用；被引 2173",survey-derived
+SD-030,10.1145/2939672.2939673,"Collaborative Knowledge Base Embedding for Recommender Systems",2016,"ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)","被 2 篇顶刊综述引用；被引 2121",survey-derived

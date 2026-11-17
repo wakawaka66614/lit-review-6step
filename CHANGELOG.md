@@ -18,6 +18,7 @@
 - **新增端到端测试基础设施**：`docs/E2E_TEST_PLAN.md`、`scripts/e2e-init.mjs`、试跑记录 `e2e/…/RESULTS.md`；OpenAlex 无 key 时改用 page 翻页并提示 key
 - **安装器升级**：`-SkillsDir` 支持 `.claude/skills`、`-Global` 用户级安装、依赖锁定到 commit、旧版本自动备份；`VALIDATION.md` 补记审计/检索/安装测试
 - **端到端机械评分**：`scripts/e2e-score.mjs` 计算覆盖率、未知引用、弱证据 claim；人工指标仍留空待评
+- **综述派生金标准 + 检索阶段对照**：`scripts/gold-from-surveys.mjs` 从三篇顶刊综述（CSUR / TORS / TOIS）构建 30 条参考集；单查询覆盖 3.3%，多查询 + 引文追踪 36.7%
 - 安装脚本改为**备份旧版本**而非删除；主 SKILL 版本统一为 2.0.0
 - 修正 HLA-S 示例中无来源的“12%”数字；修正 Gate B 的摘要时序（先蓝图、后正式摘要）；修正 README 与 workflow 中把模式 A 当默认的旧表述
 

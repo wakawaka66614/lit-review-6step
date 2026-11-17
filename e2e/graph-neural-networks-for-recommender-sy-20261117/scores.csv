@@ -1,0 +1,10 @@
+﻿metric,A_baseline,B_current,C_v2,notes
+coverage,3.3,,36.7,"检索阶段；30 条综述派生金标准；B 未跑"
+citation_verifiable,,,,
+evidence_supported,,,,
+extraction_accuracy,,,,
+taxonomy_quality,,,,
+synthesis_depth,,,,
+citation_accuracy,,,,
+cost_minutes,,,,
+heavy_edit_ratio,,,,
