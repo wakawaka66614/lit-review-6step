@@ -75,3 +75,7 @@ node skills/lit-review-6step/scripts/search-openalex.mjs `
 node scripts/e2e-score.mjs --run e2e/<run>/runs/A --gold e2e/<run>/gold-set.csv
 node scripts/e2e-score.mjs --run e2e/<run>/runs/C --gold e2e/<run>/gold-set.csv
 ```
+
+## 写作阶段小试
+
+另见 `RESULTS-writing.md`：同模型单次直写 vs 流程产出（可追溯性演示，非质量对照）。

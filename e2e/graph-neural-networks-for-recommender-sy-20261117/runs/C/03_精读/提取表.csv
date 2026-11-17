@@ -1,0 +1,9 @@
+﻿id,title,year,venue,doi,purpose,method,sample,findings,limitations,relevance,quote,page,note,design,quality,quality_notes
+C-0134,"Matrix Factorization Techniques for Recommender Systems",2009,"Computer","10.1109/mc.2009.263","用隐因子模型缓解交互稀疏","矩阵分解与 SVD++","电影评分数据","隐因子可刻画用户与物品偏好","只利用交互，不含辅助信息","作为协同过滤基线","摘要级","摘要","仅读摘要，未核验实验细节","计算实验","高","经典基线；方法被后续工作广泛复用"
+C-0103,"Deep Neural Networks for YouTube Recommendations",2016,"RecSys","10.1145/2959100.2959190","工业级两阶段推荐","深度候选生成 + 排序","YouTube 规模数据","深度网络可支撑大规模召回与排序","依赖工程特征与日志","说明工业可行性","摘要级","摘要","仅读摘要","工业系统","中","工业报告，缺少公开复现细节"
+C-0120,"Inductive Representation Learning on Large Graphs",2017,"NeurIPS","10.48550/arxiv.1706.02216","归纳式节点表示","邻居采样 + 聚合","引文网络与 Reddit","可对未见节点生成表示","采样带来方差","图编码基础组件","摘要级","摘要","仅读摘要","计算实验","高","归纳式设定对推荐新节点关键"
+C-0191,"Graph Attention Networks",2017,"ICLR","10.17863/cam.48429","用注意力聚合邻居","多头注意力","引文网络","不同邻居权重可学习","注意力开销","图编码基础组件","摘要级","摘要","仅读摘要","计算实验","高","通用图模型，非推荐专用"
+C-0136,"Graph Convolutional Neural Networks for Web-Scale Recommender Systems",2018,"KDD","10.1145/3219819.3219890","十亿级图上的推荐","随机游走采样 + 图卷积","十亿级节点工业图","可在工业规模训练与部署","采样策略影响效果","证明可扩展性","摘要级","摘要","仅读摘要","工业系统","中","工业部署，实验细节有限"
+C-0079,"Neural Graph Collaborative Filtering",2019,"SIGIR","10.1145/3331184.3331267","把高阶传播引入协同过滤","交互图上的嵌入传播","公开推荐数据集","高阶邻居信号提升表示","静态图，未建模动态","图卷积协同过滤代表作","摘要级","摘要","仅读摘要","计算实验","高","需全文核验具体增益"
+C-0138,"KGAT: Knowledge Graph Attention Network for Recommendation",2019,"KDD","10.1145/3292500.3330989","用知识图谱增强推荐","知识图谱上的注意力聚合","公开知识图谱推荐数据","关系权重可区分，高阶语义有用","图谱质量与对齐成本","知识增强路线代表","摘要级","摘要","仅读摘要","计算实验","高","需全文核验"
+C-0078,"LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation",2020,"SIGIR","10.1145/3397271.3401063","简化图卷积推荐模型","仅保留邻域聚合","公开推荐数据集","去掉非线性与特征变换仍有效","静态图，冷启动未解","简化路线代表作","摘要级","摘要","仅读摘要","计算实验","高","需全文核验"
