@@ -25,14 +25,15 @@
 
 | 目录 | 内容 |
 |---|---|
-| `skills/lit-review-6step/` | 六步编排器：入口选择、门禁、AMiner 通道、结构模式与提纲模板、导师审查（MR）与主题契约 |
+| `skills/lit-review-6step/` | 六步编排器：入口、门禁、结构选择器、论断台账、质量评价、AMiner/OpenAlex 通道、导师审查（MR）与主题契约 |
 | `skills/survey-writing/` | 综述正文：物种选择、taxonomy、图表规划、Gate A/B/C、CR-S / HLA-S 审校模型 |
-| `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望） |
-| `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范 |
-| `commands/` | 五个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` |
-| `scripts/check.mjs` | 仓库自检：frontmatter、引用路径、个人路径、密钥 |
-| `templates/文献综述项目模板/` | 六步目录 + 四张表 + 主题契约 / 提纲 / 审校记录 / 摘要模板 |
-| `docs/workflow.md` | 流程说明、入口契约、结构模式 |
+| `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
+| `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验） |
+| `commands/` | 七个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
+| `scripts/` | 仓库自检 `check.mjs`；端到端脚手架 `e2e-init.mjs`、`e2e-score.mjs`；综述派生金标准 `gold-from-surveys.mjs` |
+| `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
+| `templates/文献综述项目模板/` | 六步目录 + 候选表 / 原始结果 / 提取表 / 论断证据 / 文献关系表 + 契约 / 提纲 / 审校 / 自检模板 |
+| `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 重构记录 |
 
 ## 安装
 
@@ -106,6 +107,13 @@ node .dsh/skills/lit-review-6step/scripts/audit-refs.mjs `
 
 查五类问题：未知文献 ID、引用未纳入文献、作者年份找不到、未核验 claim 进正文、摘要核验撑数字；另外列出“纳入但未引用”。启发式结果，仍需人工回原文核对。
 
+## 验证
+
+- 当前版本 **2.0.0**；仓库自检 44 项通过
+- 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
+- 对照测试计划见 `docs/E2E_TEST_PLAN.md`；检索阶段已跑：单查询覆盖 **3.3%**，多查询 + 引文追踪 **36.7%**（顶刊综述派生金标准，见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`）
+- **未做**：全流程 A/B/C（写出完整综述 + 人工评分）；`VALIDATION.md` 里如实标注了这一点
+
 ## 依赖
 
 | 依赖 | 必须 | 用途 | 获取方式 |
@@ -165,7 +173,7 @@ Claude Code 把 `commands/*.md` 放到 `.claude/commands/`，之后可直接输�
 | 模型 | 管什么 | 什么时候跑 | 产出 |
 |---|---|---|---|
 | **MR 导师审查** | 是否还在回答用户的问题（对照主题契约） | 每个阶段门禁前 | PASS / WARN / BLOCK |
-| **CR-S 结构-逻辑审查** | 七节骨架、章节映射、论证链、防御性语言 | 每章写完、摘要定稿前 | P0/P1 问题表，每节 ≤5 条 |
+| **CR-S 结构-逻辑审查** | 章节骨架与映射、论证链、防御性语言 | 每章写完、摘要定稿前 | P0/P1 问题表，每节 ≤5 条 |
 | **HLA-S 人类语言对齐** | 章际承接、段落节奏、术语一致、AI 腔 | CR-S 通过后 | 原文 → 改写，3–5 处 |
 
 顺序固定：**MR → CR-S → HLA-S**。先确认没跑题，再看结构，最后顺语言。
@@ -199,11 +207,12 @@ lit-review-6step/
 │  ├─ survey-writing/       # 正文写作
 │  ├─ survey-abstract/      # 摘要
 │  └─ shared/evidence-norms.md
-├─ commands/                # 四个入口
+├─ commands/                # 七个入口
 ├─ templates/文献综述项目模板/
 ├─ catalog/skills.json
-├─ scripts/check.mjs
-├─ docs/workflow.md
+├─ scripts/                 # check / e2e-init / e2e-score / gold-from-surveys
+├─ docs/                    # workflow / 对照测试计划 / 重构记录
+├─ e2e/                     # 试跑记录与结果
 ├─ install.ps1
 ├─ install.sh
 ├─ THIRD_PARTY_NOTICES.md

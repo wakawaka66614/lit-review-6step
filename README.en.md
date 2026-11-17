@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | **English**
 
-Break a literature review into six checkable stages: **question → search strategy → search & screening → close reading & extraction → synthesis & drafting → final editing**. Each stage has fixed artifacts and a gate, and you can enter at any stage. The manuscript follows a seven-section outline for the "new technology on an old problem" pattern.
+Break a literature review into six checkable stages: **question → search strategy → search & screening → close reading & extraction → synthesis & drafting → final editing**. Each stage has fixed artifacts and a gate, and you can enter at any stage. The manuscript structure is chosen from six patterns; pattern A ("new technology on an old problem") uses a seven-section outline.
 
 A skill pack in [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) format. Plain Markdown, no runtime dependencies.
 
@@ -27,14 +27,15 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 
 | Path | Content |
 |---|---|
-| `skills/lit-review-6step/` | Six-stage orchestrator: entry points, gates, AMiner channel, structure patterns and outline templates, mentor review (MR) with topic contract |
+| `skills/lit-review-6step/` | Six-stage orchestrator: entry points, gates, structure selector, claim–evidence ledger, quality appraisal, AMiner/OpenAlex channels, mentor review (MR) with topic contract |
 | `skills/survey-writing/` | Survey body: choosing the review species, taxonomy, figures, Gates A/B/C, CR-S / HLA-S review models |
-| `skills/survey-abstract/` | Five-part abstract (hook → positioning → framework → evidence → outlook) |
-| `skills/shared/evidence-norms.md` | Shared evidence and language rules for all three skills |
-| `commands/` | Five commands: `lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` |
-| `scripts/check.mjs` | Repo self-check: frontmatter, referenced paths, personal paths, secrets |
-| `templates/文献综述项目模板/` | Six-stage folder layout, four tables, topic contract / outline / review log / abstract templates |
-| `docs/workflow.md` | Workflow overview, entry contracts, structure pattern |
+| `skills/survey-abstract/` | Five-part abstract (hook → positioning → framework → evidence → outlook), functions only, no fixed phrasing |
+| `skills/shared/evidence-norms.md` | Shared evidence and language rules for all three skills (four verification levels) |
+| `commands/` | Seven commands: `lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
+| `scripts/` | Repo self-check `check.mjs`; E2E scaffold `e2e-init.mjs`, `e2e-score.mjs`; survey-derived gold set `gold-from-surveys.mjs` |
+| `skills/lit-review-6step/scripts/` | `audit-refs.mjs`, `search-openalex.mjs`, `aminer_health.mjs` |
+| `templates/文献综述项目模板/` | Six-stage folders + candidates / raw results / extraction / claim ledger / relation table + contract / outline / review log / self-check templates |
+| `docs/` | `workflow.md`, `E2E_TEST_PLAN.md`, `REVISION_PLAN_v2_2026-11-17.md` |
 
 ## Install
 
@@ -96,6 +97,13 @@ node scripts/check.mjs
 
 Seven checks: catalog matches directories, frontmatter complete, referenced paths exist, README covers every skill, no personal paths, no secrets, `install.ps1` encoding. Each skill also ships a `VALIDATION.md` stating what was tested and, explicitly, what was not.
 
+## Validation
+
+- Version **2.0.0**; repo self-check passes 44 items
+- Script-level records in `skills/lit-review-6step/VALIDATION.md` (audit, OpenAlex, installer, scoring)
+- Comparison plan in `docs/E2E_TEST_PLAN.md`; retrieval stage has run: single query covers **3.3%**, multi-query + citation tracking **36.7%** (survey-derived gold set, see `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`)
+- **Not done**: full A/B/C review-level comparison (full drafts + human scoring); stated plainly in `VALIDATION.md`
+
 ## Requirements
 
 | Dependency | Required | Used for | How to get it |
@@ -153,7 +161,7 @@ Every stage gate starts with a **mentor review (MR)**: compare against `00_选�
 | Model | What it checks | When | Output |
 |---|---|---|---|
 | **MR Mentor review** | Whether the work still answers the user's question (against the topic contract) | Before every stage gate | PASS / WARN / BLOCK |
-| **CR-S Structure & logic** | Seven-section skeleton, chapter mapping, argument chain, defensive language | After each chapter, before the abstract is final | P0/P1 issue table, ≤5 per section |
+| **CR-S Structure & logic** | Chapter skeleton and mapping, argument chain, defensive language | After each chapter, before the abstract is final | P0/P1 issue table, ≤5 per section |
 | **HLA-S Human language alignment** | Cross-chapter transitions, rhythm, terminology, AI tone | After CR-S passes | Original → rewrite, 3–5 spots |
 
 Fixed order: **MR → CR-S → HLA-S**. First confirm it is still on topic, then structure, then language.
@@ -187,11 +195,12 @@ lit-review-6step/
 │  ├─ survey-writing/       # body writing
 │  ├─ survey-abstract/      # abstract
 │  └─ shared/evidence-norms.md
-├─ commands/                # four entry commands
+├─ commands/                # seven entry commands
 ├─ templates/文献综述项目模板/
 ├─ catalog/skills.json
-├─ scripts/check.mjs
-├─ docs/workflow.md
+├─ scripts/                 # check / e2e-init / e2e-score / gold-from-surveys
+├─ docs/                    # workflow / E2E plan / revision plan
+├─ e2e/                     # pilot runs and results
 ├─ install.ps1
 ├─ install.sh
 ├─ THIRD_PARTY_NOTICES.md
