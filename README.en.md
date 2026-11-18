@@ -122,7 +122,7 @@ Limits:
 
 ## Validation
 
-- Version **2.5.0**; repo self-check passes **50 items** (`node scripts/check.mjs`, 7 groups)
+- Version **2.6.0**; repo self-check passes **50 items** (`node scripts/check.mjs`, 7 groups)
 - Script-level records in `skills/lit-review-6step/VALIDATION.md` (audit, OpenAlex, installer, scoring)
 - Comparison plan in `docs/E2E_TEST_PLAN.md`. The retrieval stage ran two experiments whose numbers are **not interchangeable**:
   - **Uncontrolled budget (A vs C)**: single query, 25 hits → **3.3%**; multi-query + citation tracking, 132 hits → **36.7%** (3 faceted queries still 3.3%; the gain comes from citation tracking). See `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`

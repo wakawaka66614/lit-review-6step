@@ -21,6 +21,7 @@
 | 证据不分强弱 | 研究质量评价：按设计选框架；摘要级只给“初步/未评价” |
 | 结构僵化、为结构造分类 | 结构选择器：六种模式里选一个，模式 A 只是可选之一 |
 | 文献够了其实不够 | 覆盖矩阵 + `audit-coverage`：主题/方法/时间三维查缺口 |
+| 文献太少、只引几篇 | 硬门槛：纳入 ≥50、全文 ≥5、正文引用 ≥50，`audit-corpus` 不达标不进 S5 |
 | 分类看着整齐其实脆弱 | `audit-taxonomy`：单篇类别、其他占比、来源单一、纳入未分类 |
 | 图表套模板 | `stat-questions` 先出统计问题 → `fig-plan` 出候选图表计划 → `fig-render` 出统计图；结构图 / 框架图才走 `nature-figure`（见「图表」一节） |
 | Excel 精读表读不进 | `xlsx-to-csv` 转成提取表，保留梯队与 9 个维度列 |
@@ -35,7 +36,7 @@
 | `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
 | `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验；`用户提供` 是来源标签） |
 | `commands/` | 九个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `reading-table` / `fig-plan` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
-| `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`、`stat-questions.mjs`、`fig-plan.mjs`、`fig-render.py`、`xlsx-to-csv.py`、`make-reading-table.py`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
+| `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`、`audit-corpus.mjs`、`stat-questions.mjs`、`fig-plan.mjs`、`fig-render.py`、`xlsx-to-csv.py`、`make-reading-table.py`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
 | `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
 | `templates/文献综述项目模板/` | 六步目录 + 候选表 / 原始结果 / 提取表 / 论断证据 / 文献关系表 + 契约 / 提纲 / 审校 / 自检模板 |
 | `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 与 `REVISION_PLAN_v2.1_2026-11-17.md` 重构记录、`V2.1_TEST_REPORT.md` 测试报告 |
@@ -140,7 +141,7 @@ python scripts/fig-render.py --spec 04_综合/图表计划.csv --out-dir 04_综�
 
 ## 验证
 
-- 当前版本 **2.5.0**；仓库自检 **50 项通过**（`node scripts/check.mjs`，7 组检查）
+- 当前版本 **2.6.0**；仓库自检 **50 项通过**（`node scripts/check.mjs`，7 组检查）
 - 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
 - 对照测试计划见 `docs/E2E_TEST_PLAN.md`。检索阶段跑了两组实验，**条件不同，数字不能混用**：
   - **无预算控制（A vs C）**：单查询 25 条覆盖 **3.3%**；多查询 + 引文追踪 132 条覆盖 **36.7%**（3 条分面查询 75 条时仍 3.3%，增量来自引文追踪），见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`
