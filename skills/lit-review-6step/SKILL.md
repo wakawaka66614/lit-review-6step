@@ -2,7 +2,7 @@
 name: lit-review-6step
 description: 六步文献综述工作流编排器：研究缺口与 RQ → 检索策略 → 多通道检索与初筛 → 精读与提取 → 综合写作 → 统稿与格式。把已装的 literature-review-skill（YAN 五件套）、literature-review-skills（星塔五件套）、sr-screener、academic-paper、survey-writing、survey-abstract 与 AMiner 检索通道串成一条带门禁、有固定产物的流水线。支持从任意阶段进入：只有方向从 S1、已有题目从 S2、已有检索式从 S3、已有文献清单从 S4、已有提取表从 S5、已有初稿从 S6。用户说"做文献综述 / 开题综述 / 综述项目 / 从选题到成稿 / 从 S2 开始 / 检索策略表 / 初筛 / 提取表 / 研究缺口 / 帮我把综述流程搭起来"时触发。
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
   updated: "2026-11-17"
 ---
 
@@ -86,7 +86,7 @@ S2 入口的 RQ 卡只要三行：题目、一句 RQ（对象 + 机制 + 边界�
 
 写整篇综述时，S5 **先跑结构选择器**（`references/survey-structure.md`）：从六种结构里选一个主导模式，写清理由与备选；模式 A「新技术 × 旧问题」只是可选之一，用 A 时按 `assets/survey-outline-pattern1.md` 填提纲。摘要放 S6，用 `survey-abstract` 的五段式收口。
 
-图表在 S5 落地：提纲里的图表计划逐张交给 `nature-figure`——数据图走它的 Python/R 绘图后端，结构图与 taxonomy 走矢量示意图路线，交付前跑它自带的 audit 脚本。出图存 `04_综合/figures/`，命名 `Fig1_xxx.pdf` + `.svg` + `.png`。
+图表在 S5 落地，**按主题生成，不用固定模板**：先跑 `scripts/fig-plan.mjs` 从数据生成候选，按论点增删并补 `claim_id`，统计图交 `scripts/fig-render.py` 渲染；只有结构图 / 框架图才交 `nature-figure`。规则见 `references/figure-planning.md`，出图存 `04_综合/figures/`（PDF + SVG + PNG）。
 
 正文每写完一章，先过 **CR-S**（结构-逻辑审查：七节骨架、章节映射、论证链、防御性语言），再过 **HLA-S**（人类语言对齐：章际承接、段落节奏、术语一致、去 AI 腔）；摘要定稿前单独过 CR-S。规则见 `survey-writing/references/review-and-alignment.md`，结果记进 `05_成稿/审校记录.md`。
 
@@ -114,6 +114,8 @@ S2 入口的 RQ 卡只要三行：题目、一句 RQ（对象 + 机制 + 边界�
 ├─ 04_综合/概念矩阵.md
 ├─ 04_综合/文献关系表.csv
 ├─ 04_综合/冲突地图.md
+├─ 04_综合/图表计划.csv
+├─ 04_综合/figures/
 └─ 05_成稿/提纲.md
    05_成稿/初稿.md
    05_成稿/审校记录.md

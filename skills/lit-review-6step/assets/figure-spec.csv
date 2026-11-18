@@ -1,0 +1,3 @@
+﻿figure_id,question,claim_id,chart_type,data_file,x,y,group,title,note
+F01,文献数量随时间怎么变,,line,data/year_counts.csv,year,count,,"图方法在 2020 年后快速增加，2024 年达到峰值",说明时间覆盖
+F02,方法族怎么构成,,hbar,data/method_counts.csv,count,method,,"协同过滤图卷积占多数，知识增强仍是少数",说明分类结构

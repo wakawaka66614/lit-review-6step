@@ -157,11 +157,12 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 3. 列聚成 3–7 个主题；每组至少写一条 L3 及以上判断（关系 + 差异来源 + 解释 + 边界），不许停在“A 研究了…B 研究了…”。
 4. 冲突地图：放 `relation_type=结论冲突` 的子集，先查质量差异，再查条件差异。
 5. 逐段写作：**从论断台账取证据**，句子按“判断 → 证据 → 关系 → 解释 → 边界”组织；结尾 gap 段逐条挂回 RQ。
-6. **出图**：提纲里的图表计划逐张交给 `nature-figure`（读 `.dsh/skills/nature-figure/SKILL.md`）：
-   - 数据图 / 对比图 → Python 或 R 绘图后端（matplotlib / ggplot2），输出矢量 PDF + SVG；
-   - 结构图 / taxonomy 总图 / 框架图 → 矢量示意图路线（SVG），或 Mermaid 生成骨架再精修；
-   - 交付前跑它自带的 `scripts/audit_svg_schematic.py` 或 `scripts/validate_figure.py`；
-   - 命名与存放：`04_综合/figures/Fig1_xxx.pdf|.svg|.png`，与提纲编号一一对应。
+6. **出图（主题驱动，不用固定模板）**：
+   - 先跑 `scripts/fig-plan.mjs`，从候选表 / 提取表 / 关系表 / 覆盖矩阵生成图表候选（`04_综合/图表计划.csv` + `data/`）；
+   - 按主题增删：只保留能回答论点的图，补 `claim_id` 与结论式 `title`；规则见 `references/figure-planning.md`；
+   - 统计图用 `scripts/fig-render.py` 一次性渲染 PDF + SVG + PNG；
+   - 结构图 / taxonomy 总图 / 框架图才交 `nature-figure`（数据图不要用示意图冒充）；
+   - 命名与存放：`04_综合/figures/Fig1_xxx.pdf|.svg|.png`，与图表计划编号一致。
 
 **门禁**：
 - 结构选择有理由，且与文献特征匹配；只用一套主维度；

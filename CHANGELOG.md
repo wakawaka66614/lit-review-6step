@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.0 — 2026-11-18
+
+图表从“固定模板”改为**主题驱动**。
+
+- 新增 `references/figure-planning.md`：一图一问、数据先于图、按数据形状选图型
+- 新增 `fig-plan.mjs`：从候选表 / 提取表 / 关系表 / 覆盖矩阵生成图表候选与聚合数据
+- 新增 `fig-render.py`：按 `图表计划.csv` 渲染 bar / hbar / line / stacked_bar / grouped_bar / scatter / heatmap，输出 PDF + SVG + PNG
+- 新增 `04_综合/图表计划.csv` 与 `/fig-plan` 命令；提纲模板里的固定“结构图/分类图”清单已删除
+- S5 出图流程改为“fig-plan 候选 → 按主题增删 → fig-render / nature-figure”
+
 ## 2.1.0 — 2026-11-17
 
 按第二轮审查意见修数据与审计可靠性（见 `docs/REVISION_PLAN_v2.1_2026-11-17.md`）。
