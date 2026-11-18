@@ -184,7 +184,7 @@ for (const [role, label] of CAT_ROLES) {
   const vals = nonEmpty(rows, col);
   if (!vals.length) continue;
   const n = uniq(vals).length;
-  if (n > 30) continue;
+  if (n > 12) continue;
   const chart = n <= 7 ? 'bar' : 'hbar';
   addQuestion(`${label}各有多少篇文献？`, label, col, 'count', chart, role, `数据里有 ${n} 个${label}取值`);
   if (roles.year && roles[role]) addQuestion(`${label}随年份如何变化？`, `${label}×年份`, `${col},${roles.year}`, 'count', 'stacked_bar', role, '同时有年份与分类字段');
