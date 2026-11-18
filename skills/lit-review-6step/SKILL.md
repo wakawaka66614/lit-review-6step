@@ -2,7 +2,7 @@
 name: lit-review-6step
 description: 六步文献综述工作流编排器：研究缺口与 RQ → 检索策略 → 多通道检索与初筛 → 精读与提取 → 综合写作 → 统稿与格式。把已装的 literature-review-skill（YAN 五件套）、literature-review-skills（星塔五件套）、sr-screener、academic-paper、survey-writing、survey-abstract 与 AMiner 检索通道串成一条带门禁、有固定产物的流水线。支持从任意阶段进入：只有方向从 S1、已有题目从 S2、已有检索式从 S3、已有文献清单从 S4、已有提取表从 S5、已有初稿从 S6。用户说"做文献综述 / 开题综述 / 综述项目 / 从选题到成稿 / 从 S2 开始 / 检索策略表 / 初筛 / 提取表 / 研究缺口 / 帮我把综述流程搭起来"时触发。
 metadata:
-  version: "2.3.0"
+  version: "2.4.0"
   updated: "2026-11-17"
 ---
 

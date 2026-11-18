@@ -139,13 +139,14 @@ def render_grouped(rows, x, y, group, title):
 
 
 def render_heatmap(rows, x, y, value, title):
-    xs = sorted({r[x] for r in rows})
-    ys = sorted({r[y] for r in rows})
+    xs = list(dict.fromkeys(r[x] for r in rows))
+    ys = list(dict.fromkeys(r[y] for r in rows))
     mat = np.zeros((len(ys), len(xs)))
     for r in rows:
         mat[ys.index(r[y]), xs.index(r[x])] = num(r[value])
     fig, ax = plt.subplots(figsize=(max(5.0, 0.9 * len(xs) + 2), max(3.0, 0.6 * len(ys) + 1)))
-    im = ax.imshow(mat, cmap="Blues", aspect="auto")
+    vmin = 0 if mat.min() >= 0 else None
+    im = ax.imshow(mat, cmap="Blues", aspect="auto", vmin=vmin)
     ax.set_xticks(range(len(xs)), xs, rotation=30, ha="right")
     ax.set_yticks(range(len(ys)), ys)
     for i in range(len(ys)):

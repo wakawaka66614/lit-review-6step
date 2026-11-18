@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.4.0 — 2026-11-18
+
+支持“多梯队 + 多阅读维度”的 Excel 精读记录表。
+
+- 新增 `scripts/xlsx-to-csv.py`：自动找表头、跳过维度提问行、合并多个梯队 sheet，输出带 `tier` 与各维度列的提取表
+- `stat-questions` 识别 `tier` / memory_object / addressing / retrieval / migration / replacement / persistence / consistency / evaluation / limitation，生成“需先编码”的维度问题
+- `fig-plan` 新增梯队计数与“维度证据厚度”热力图（平均字数，不看看空率）
+- 用 29 篇 LLM 长期记忆记录表实测：转换 29 行，9 个维度全保留
+
 ## 2.3.0 — 2026-11-18
 
 图表之前先问“这个主题该统计什么”。

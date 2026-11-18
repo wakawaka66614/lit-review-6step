@@ -73,6 +73,16 @@ const ROLE_PATTERNS = [
   ['citations', /citation|被引/i],
   ['limitations', /limitation|局限/i],
   ['findings', /finding|结论|发现/i],
+  ['tier', /^tier$|梯队/i],
+  ['memory_object', /memory[ _]?object|记忆对象/i],
+  ['addressing', /addressing|寻址/i],
+  ['retrieval', /retrieval|fault|取回|缺页/i],
+  ['migration', /migration|迁移/i],
+  ['replacement', /replacement|淘汰|替换/i],
+  ['persistence', /persistence|持久/i],
+  ['consistency', /consistency|一致/i],
+  ['evaluation', /evaluation|评测|指标/i],
+  ['limitation', /limitation|局限/i],
 ];
 
 function detectRoles(header) {
@@ -100,6 +110,7 @@ const DOMAIN_BOOST = [
   [/医学|临床|patient|clinical|治疗|干预/i, ['design', 'dataset', 'quality']],
   [/教育|学生|student|learning|教学/i, ['dataset', 'design', 'task']],
   [/安全|隐私|fair|公平|privacy/i, ['task', 'quality', 'limitations']],
+  [/记忆|memory|存储|storage|kv ?cache|长期/i, ['memory_object', 'addressing', 'retrieval', 'migration', 'replacement', 'persistence', 'consistency', 'evaluation', 'limitation']],
 ];
 
 const args = parseArgs(process.argv);
@@ -166,7 +177,7 @@ for (const [role, col] of Object.entries(roles)) {
 }
 
 // 分类维度：计数 + 与年份交叉
-const CAT_ROLES = [['method', '方法'], ['dataset', '数据集/样本'], ['design', '研究设计'], ['venue', '期刊/会议'], ['quality', '质量评级'], ['task', '任务/应用'], ['metric', '评价指标'], ['code', '代码开放']];
+const CAT_ROLES = [['tier', '梯队'], ['method', '方法'], ['dataset', '数据集/样本'], ['design', '研究设计'], ['venue', '期刊/会议'], ['quality', '质量评级'], ['task', '任务/应用'], ['metric', '评价指标'], ['code', '代码开放']];
 for (const [role, label] of CAT_ROLES) {
   const col = roles[role];
   if (!col) continue;
@@ -181,6 +192,21 @@ for (const [role, label] of CAT_ROLES) {
 
 if (roles.citations && roles.year) {
   addQuestion('被引次数与发表年份是什么关系？', '引用×年份', `${roles.citations},${roles.year}`, 'scatter', 'scatter', 'citations', '有被引与年份两个数值/有序字段');
+}
+
+const DIM_LABELS = {
+  memory_object: '记忆对象', addressing: '寻址方式', retrieval: '取回/缺页触发',
+  migration: '迁移策略', replacement: '淘汰策略', persistence: '持久性',
+  consistency: '一致性', evaluation: '评测指标', limitation: '局限性',
+};
+const DIM_KEYS = Object.keys(DIM_LABELS);
+const presentDims = DIM_KEYS.filter((r) => roles[r]);
+if (presentDims.length >= 3) {
+  addQuestion('九个维度的填写完成度如何？', '证据完整度', presentDims.map((r) => roles[r]).join(','), 'fill_rate', 'heatmap', 'evaluation', '维度多且都是自由文本，先看哪些维度证据最薄');
+  for (const r of ['memory_object', 'addressing', 'retrieval', 'replacement', 'evaluation', 'limitation']) {
+    if (!roles[r]) continue;
+    addQuestion(`「${DIM_LABELS[r]}」可以归成哪几类？`, DIM_LABELS[r], roles[r], 'coding', 'bar', r, '自由文本，需先编码再统计，不能直接分词当结论');
+  }
 }
 
 if (roles.limitations) {

@@ -137,6 +137,8 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 
 **评质量**：按 `references/quality-appraisal.md` 选对应设计的框架，在提取表填 `design`、`quality`、`quality_notes`、`appraisal_status`、`appraisal_confidence`。**摘要级阅读只能标记“未评价/部分完成/低置信”**，不能直接给高/中/低正式等级。
 
+**Excel 精读表**：若已有“多梯队 + 多维度”的 Excel 记录表，先跑 `python scripts/xlsx-to-csv.py --xlsx 记录表.xlsx --out 03_精读/提取表.csv`，保留 `tier` 与各维度列，再进统计与写作。
+
 **覆盖审计**：填 `04_综合/覆盖矩阵.csv`（方向 / 重要性 / 经典 / 近期 / 全文 / 状态），跑 `scripts/audit-coverage.mjs`；核心方向不足就回 S3 补检索或 S4 补全文。规则见 `references/coverage-audit.md`。
 
 **字段**：`paper_id` / 研究目的 / 方法 / 样本或数据 / 关键发现 / 局限 / 与 RQ 的关系 / 可引用原句 + 页码 / 设计类型 / 质量评级 / 评价状态与置信度。

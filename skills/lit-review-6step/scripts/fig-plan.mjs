@@ -69,6 +69,7 @@ const candidates = read(args.candidates).filter((c) => c.included === '1');
 const extraction = read(args.extraction);
 const relations = read(args.relations);
 const coverage = read(args.coverage);
+const extractionCols = extraction.length ? Object.keys(extraction[0]) : [];
 
 const spec = [];
 const notes = [];
@@ -110,6 +111,33 @@ if (extraction.length) {
     writeCsv(path.join(dataDir, 'quality_by_year.csv'), ['year', 'quality', 'count'], rows);
     add('证据强度随年份怎么变', 'stacked_bar', 'quality_by_year.csv', 'year', 'count', 'quality', '证据强度的年份构成', '只在质量评级不是“未评价”时使用');
   }
+}
+
+const dimCols = ['memory_object', 'addressing', 'retrieval_fault', 'migration', 'replacement', 'persistence', 'consistency', 'evaluation', 'limitation']
+  .filter((c) => extractionCols.includes(c));
+if (extractionCols.includes('tier') && extraction.length) {
+  const tierRows = countBy(extraction, (e) => e.tier);
+  writeCsv(path.join(dataDir, 'tier_counts.csv'), ['tier', 'count'], tierRows);
+  add('各梯队各有多少篇文献', 'bar', 'tier_counts.csv', 'tier', 'count', '', '各梯队文献数量', '梯队分布，说明证据分层的规模');
+}
+if (dimCols.length >= 3 && extractionCols.includes('tier')) {
+  const tiers = [...new Set(extraction.map((e) => e.tier))];
+  const LABELS = {
+    memory_object: '记忆对象', addressing: '寻址', retrieval_fault: '取回/缺页',
+    migration: '迁移', replacement: '淘汰', persistence: '持久性',
+    consistency: '一致性', evaluation: '评测', limitation: '局限',
+  };
+  const dimRows = [];
+  for (const t of tiers) {
+    const rs = extraction.filter((e) => e.tier === t);
+    for (const c of dimCols) {
+      const vals = rs.map((e) => (e[c] || '').trim()).filter(Boolean);
+      const avg = vals.length ? vals.reduce((n, v) => n + v.length, 0) / vals.length : 0;
+      dimRows.push([t, LABELS[c] || c, Math.round(avg)]);
+    }
+  }
+  writeCsv(path.join(dataDir, 'dimension_depth.csv'), ['tier', 'dimension', 'avg_chars'], dimRows);
+  add('各梯队各维度记录得有多厚', 'heatmap', 'dimension_depth.csv', 'tier', 'dimension', 'avg_chars', '证据厚度：平均字数，越薄越可能缺证据', '全填满时看记录长度，不看看空率');
 }
 
 if (relations.length) {

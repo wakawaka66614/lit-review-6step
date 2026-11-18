@@ -5,6 +5,14 @@ description: 按主题生成统计问题与图表候选，并渲染统计图
 
 不要套固定四件套，也不要上来就画。先问统计问题，再画图。
 
+0. 如果材料是 Excel 精读记录表（多梯队 / 多维度）：
+
+```text
+python scripts/xlsx-to-csv.py --xlsx 记录表.xlsx --out 03_精读/提取表.csv
+```
+
+转换后确认有 `tier` 与维度列（如 memory_object / addressing / retrieval_fault）。
+
 1. 从提取表生成**主题相关的统计问题**：
 
 ```text
