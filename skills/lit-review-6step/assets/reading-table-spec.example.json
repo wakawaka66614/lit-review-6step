@@ -1,0 +1,81 @@
+{
+ "topic": "示例主题：图神经网络推荐",
+ "subtitle": "精读文献记录表",
+ "note": "每格写机制、证据位置与边界；读完能横向比较，而不是复述摘要。",
+ "dimensions": [
+  {
+   "name": "问题设定",
+   "question": "这篇论文解决推荐中的哪个具体问题？",
+   "write": "问题定义 + 与相邻问题的边界",
+   "boundary": "不要把“冷启动”和“稀疏”混为一谈",
+   "analysis": "把文献放进问题分类"
+  },
+  {
+   "name": "方法机制",
+   "question": "核心机制是什么？信息如何传播/聚合？",
+   "write": "输入 → 表示 → 聚合 → 输出 + 关键公式",
+   "boundary": "机制差异不等于实现差异",
+   "analysis": "比较方法族"
+  },
+  {
+   "name": "数据与基线",
+   "question": "在哪些数据上测？基线是否公平？",
+   "write": "数据集 + 划分 + 基线 + 调参口径",
+   "boundary": "不同划分下的数字不可直接比",
+   "analysis": "判断证据强度"
+  },
+  {
+   "name": "评测指标",
+   "question": "测了哪些指标？是否报告方差与显著性？",
+   "write": "指标 + 主结果 + 消融",
+   "boundary": "只报最优轮次不算稳健",
+   "analysis": "识别评测口径差异"
+  },
+  {
+   "name": "适用边界",
+   "question": "在什么条件下有效？什么时候失效？",
+   "write": "场景 + 前提 + 失效案例",
+   "boundary": "作者声明的局限不等于真实边界",
+   "analysis": "写挑战章"
+  },
+  {
+   "name": "可复现性",
+   "question": "代码/数据/超参是否公开？",
+   "write": "链接 + 缺什么 + 复现难度",
+   "boundary": "有代码不等于可复现",
+   "analysis": "质量评价"
+  }
+ ],
+ "tiers": [
+  {
+   "name": "第一梯队 · 核心方法",
+   "description": "必读，逐段精读",
+   "papers": [
+    {
+     "ref": "[1]",
+     "title": "示例：Neural Graph Collaborative Filtering",
+     "authors_year": "Wang et al. · 2019",
+     "focus": "理解高阶传播如何进入嵌入学习"
+    },
+    {
+     "ref": "[2]",
+     "title": "示例：LightGCN",
+     "authors_year": "He et al. · 2020",
+     "focus": "理解简化传播的取舍"
+    }
+   ]
+  },
+  {
+   "name": "第二梯队 · 评测与背景",
+   "description": "按需读方法与结论",
+   "papers": [
+    {
+     "ref": "[3]",
+     "title": "示例：推荐系统评测综述",
+     "authors_year": "示例作者 · 2021",
+     "focus": "对照评测口径"
+    }
+   ]
+  }
+ ]
+}

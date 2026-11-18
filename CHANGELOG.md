@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.5.0 — 2026-11-18
+
+阅读前先按主题生成“精读记录表”。
+
+- 新增 `references/reading-table.md`：梯队按阅读目的分、维度从 RQ 长出来（机制 / 证据 / 边界），6–9 个维度
+- 新增 `scripts/make-reading-table.py`：按 JSON 规格生成 Excel（封面 / 使用说明 / 阅读框架 / 进度 / 总览 / 各梯队页），含维度提问行、冻结窗格、筛选
+- 新增 `assets/reading-table-spec.example.json` 与 `/reading-table` 命令
+- S4 增加“建精读表”步骤与门禁；用 29 篇 LLM 记忆记录表实测生成 9 个 sheet
+
 ## 2.4.0 — 2026-11-18
 
 支持“多梯队 + 多阅读维度”的 Excel 精读记录表。

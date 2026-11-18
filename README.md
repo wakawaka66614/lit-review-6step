@@ -24,6 +24,7 @@
 | 分类看着整齐其实脆弱 | `audit-taxonomy`：单篇类别、其他占比、来源单一、纳入未分类 |
 | 图表套模板 | `stat-questions` 按主题生成统计问题；`fig-plan` 出候选、`fig-render` 渲染 |
 | Excel 精读表读不进 | `xlsx-to-csv` 转成提取表，保留梯队与 9 个维度列 |
+| 读文献没有统一记录结构 | `reading-table` 按主题生成“多梯队 × 多维度”精读表（Excel） |
 
 ## 组成
 
@@ -34,7 +35,7 @@
 | `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
 | `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验；`用户提供` 是来源标签） |
 | `commands/` | 七个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
-| `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`、`stat-questions.mjs`、`fig-plan.mjs`、`fig-render.py`、`xlsx-to-csv.py`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
+| `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`、`stat-questions.mjs`、`fig-plan.mjs`、`fig-render.py`、`xlsx-to-csv.py`、`make-reading-table.py`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
 | `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
 | `templates/文献综述项目模板/` | 六步目录 + 候选表 / 原始结果 / 提取表 / 论断证据 / 文献关系表 + 契约 / 提纲 / 审校 / 自检模板 |
 | `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 重构记录 |
@@ -121,7 +122,7 @@ node scripts/audit-coverage.mjs --matrix 04_综合/覆盖矩阵.csv
 
 ## 验证
 
-- 当前版本 **2.4.0**；仓库自检 44 项通过
+- 当前版本 **2.5.0**；仓库自检 44 项通过
 - 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
 - 对照测试计划见 `docs/E2E_TEST_PLAN.md`；检索阶段已跑：单查询覆盖 **3.3%**，多查询 + 引文追踪 **36.7%**（顶刊综述派生金标准，见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`）
 - 写作阶段小试：无法回溯引用 **2 vs 0**（同模型直写 vs 流程产出，见 `RESULTS-writing.md`；非质量对照）

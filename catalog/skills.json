@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "name": "lit-review-6step",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "updated": "2026-11-17",
   "skills": [
     {
@@ -45,6 +45,7 @@
     "commands/mentor-check.md",
     "commands/audit-refs.md",
     "commands/fig-plan.md",
+    "commands/reading-table.md",
     "commands/search-openalex.md"
   ]
 }

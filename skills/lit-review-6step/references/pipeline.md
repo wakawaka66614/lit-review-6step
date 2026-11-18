@@ -133,6 +133,8 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 
 **动作**：Keshav 三遍法——第一遍 10 分钟判断值不值得读；第二遍抓论证结构与证据链；第三遍复现关键细节。笔记落 `03_精读/notes/`，结构化字段落 `03_精读/提取表.csv`。
 
+**建精读表**：按 `references/reading-table.md` 设计 3–5 个梯队、6–9 个维度，写规格 JSON，跑 `python scripts/make-reading-table.py --spec 阅读表规格.json --out 03_精读/精读记录表.xlsx`；边读边填，每格写机制 + 证据位置 + 边界。
+
 **建台账**：把每篇的 `findings` 拆成可判断真假的论断，写入 `03_精读/论断证据.csv`（字段与规则见 `references/claim-evidence.md`）。一个论断一行证据；`conditions` 必填；`verification` 按四级标（全文 / 摘要 / 元数据 / 未核验）。
 
 **评质量**：按 `references/quality-appraisal.md` 选对应设计的框架，在提取表填 `design`、`quality`、`quality_notes`、`appraisal_status`、`appraisal_confidence`。**摘要级阅读只能标记“未评价/部分完成/低置信”**，不能直接给高/中/低正式等级。
@@ -143,7 +145,7 @@ WARN 记录进 `00_选题/导师审查.md`；BLOCK 退回上一阶段，不靠�
 
 **字段**：`paper_id` / 研究目的 / 方法 / 样本或数据 / 关键发现 / 局限 / 与 RQ 的关系 / 可引用原句 + 页码 / 设计类型 / 质量评级 / 评价状态与置信度。
 
-**门禁**：候选表 `included=1` 的每一篇都有提取行；"局限"列为空的行退回重读；每篇至少贡献 1 条 claim；台账里没有空 `conditions`；质量评级与阅读深度一致（摘要级不得给正式等级）；覆盖矩阵核心方向不为“不足/待补充”。
+**门禁**：精读表已生成且维度来自 RQ；候选表 `included=1` 的每一篇都有提取行；"局限"列为空的行退回重读；每篇至少贡献 1 条 claim；台账里没有空 `conditions`；质量评级与阅读深度一致（摘要级不得给正式等级）；覆盖矩阵核心方向不为“不足/待补充”。
 
 ---
 
