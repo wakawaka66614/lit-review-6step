@@ -21,6 +21,11 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 | Claims not traceable to evidence | Claim–Evidence ledger + four verification levels (full text / abstract / metadata / unverified) |
 | All evidence treated as equal | Quality appraisal: pick a framework by design, rate high / medium / low with reasons |
 | Rigid structure, categories invented to fit it | Structure selector: six patterns, pattern A is only one option |
+| Enough papers, thin coverage | Coverage matrix + `audit-coverage`: topic / method / time gaps |
+| A tidy taxonomy that is actually fragile | `audit-taxonomy`: single-paper categories, "other" share, single-source categories, included-but-uncategorized |
+| Figures copied from a fixed template | `stat-questions` → `fig-plan` → `fig-render` chain; structural diagrams go to `nature-figure` (see Figures) |
+| Excel reading logs cannot be ingested | `xlsx-to-csv` converts to the extraction table, keeping tier and dimension columns |
+| No shared structure for reading notes | `reading-table` generates a tier × dimension reading workbook from the RQ |
 | Skipping stages breaks the ending | Entry contracts + recorded debt, paid back at S5/S6 |
 
 ## What's inside
@@ -31,11 +36,11 @@ Author: 武文政 (Wu Wenzheng) · [@wakawaka66614](https://github.com/wakawaka6
 | `skills/survey-writing/` | Survey body: choosing the review species, taxonomy, figures, Gates A/B/C, CR-S / HLA-S review models |
 | `skills/survey-abstract/` | Five-part abstract (hook → positioning → framework → evidence → outlook), functions only, no fixed phrasing |
 | `skills/shared/evidence-norms.md` | Shared evidence and language rules for all three skills (four verification levels) |
-| `commands/` | Seven commands: `lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
-| `scripts/` | Repo self-check `check.mjs`; E2E scaffold `e2e-init.mjs`, `e2e-score.mjs`; survey-derived gold set `gold-from-surveys.mjs` |
-| `skills/lit-review-6step/scripts/` | `audit-refs.mjs`, `search-openalex.mjs`, `aminer_health.mjs` |
+| `commands/` | Nine commands: `lit-review` / `lit-review-s2` / `survey-outline` / `reading-table` / `fig-plan` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
+| `scripts/` | Audit and figure tools: `check.mjs`, `merge-results.mjs`, `audit-taxonomy.mjs`, `audit-coverage.mjs`, `stat-questions.mjs`, `fig-plan.mjs`, `fig-render.py`, `xlsx-to-csv.py`, `make-reading-table.py`; E2E: `e2e-init` / `e2e-score` / `gold-from-surveys` |
+| `skills/lit-review-6step/scripts/` | `audit-refs.mjs` (citation audit), `search-openalex.mjs` (search / citations), `aminer_health.mjs` |
 | `templates/文献综述项目模板/` | Six-stage folders + candidates / raw results / extraction / claim ledger / relation table + contract / outline / review log / self-check templates |
-| `docs/` | `workflow.md`, `E2E_TEST_PLAN.md`, `REVISION_PLAN_v2_2026-11-17.md` |
+| `docs/` | `workflow.md`, `E2E_TEST_PLAN.md`, `REVISION_PLAN_v2_2026-11-17.md` and `REVISION_PLAN_v2.1_2026-11-17.md`, `V2.1_TEST_REPORT.md` |
 
 ## Install
 
@@ -97,13 +102,35 @@ node scripts/check.mjs
 
 Seven checks: catalog matches directories, frontmatter complete, referenced paths exist, README covers every skill, no personal paths, no secrets, `install.ps1` encoding. Each skill also ships a `VALIDATION.md` stating what was tested and, explicitly, what was not.
 
+## Figures (S5)
+
+Three steps, **question first, chart type second**:
+
+```powershell
+node scripts/stat-questions.mjs --extraction 03_精读/提取表.csv --topic "your topic" --out-dir 04_综合
+node scripts/fig-plan.mjs --candidates 01_检索/候选表.csv --extraction 03_精读/提取表.csv `
+  --relations 04_综合/文献关系表.csv --coverage 04_综合/覆盖矩阵.csv --out-dir 04_综合
+python scripts/fig-render.py --spec 04_综合/图表计划.csv --out-dir 04_综合/figures --formats pdf,svg,png
+```
+
+Limits:
+
+- `stat-questions` only proposes questions the data can answer ("how many / how distributed"), never "why better"; relevance is scored by keyword rules, so re-check after changing the topic. Code free-text fields first; without `--topic` every candidate drops to low priority.
+- `fig-plan` produces candidates only: it aggregates `图表计划.csv` and `data/*.csv` from candidates / extraction / relations / coverage and does **not** decide what this topic should show. Cut down to 3–6 figures for your argument, then add `claim_id` and conclusion-style titles.
+- `fig-render` renders **statistical charts only** (bar / hbar / line / stacked_bar / grouped_bar / scatter / heatmap) from pre-aggregated CSV columns named in the plan; it does no statistics. Structural / framework / taxonomy overview figures go to `nature-figure`; never pass a schematic off as a data figure.
+- Chinese labels need a local CJK font (Microsoft YaHei / SimHei / Noto Sans CJK SC); if none is present, switch fonts or use English labels.
+
 ## Validation
 
-- Version **2.5.0**; repo self-check passes 44 items
+- Version **2.5.0**; repo self-check passes **50 items** (`node scripts/check.mjs`, 7 groups)
 - Script-level records in `skills/lit-review-6step/VALIDATION.md` (audit, OpenAlex, installer, scoring)
-- Comparison plan in `docs/E2E_TEST_PLAN.md`; retrieval stage has run: single query covers **3.3%**, multi-query + citation tracking **36.7%** (survey-derived gold set, see `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`)
+- Comparison plan in `docs/E2E_TEST_PLAN.md`. The retrieval stage ran two experiments whose numbers are **not interchangeable**:
+  - **Uncontrolled budget (A vs C)**: single query, 25 hits → **3.3%**; multi-query + citation tracking, 132 hits → **36.7%** (3 faceted queries still 3.3%; the gain comes from citation tracking). See `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`
+  - **Controlled budget (A/B/C/D)**: at a 25-hit budget, A **3.3%** / B **0.0%** / C **13.3%**; only D, with the budget lifted to 194 hits, reaches **60.0%**. See `RESULTS-abcd.md` in the same folder
+  - **60.0% vs 36.7% is not a like-for-like comparison**: the gap is mostly budget (194 vs 132 hits), not strategy
+  - The gold set is survey-derived (30 items from CSUR / TORS / TOIS), not manually verified; one topic only, no extrapolation
 - Writing-stage pilot: unresolvable citations **2 vs 0** (same model, direct write vs pipeline output; see `RESULTS-writing.md`; not a quality comparison)
-- **Not done**: independent blind review-level A/B/C; stated plainly in `VALIDATION.md`
+- **Not done**: an independent blind quality comparison of the writing itself; stated plainly in `VALIDATION.md`
 
 ## Requirements
 
@@ -114,7 +141,7 @@ Seven checks: catalog matches directories, frontmatter complete, referenced path
 | [StarTower suite](https://github.com/xingtaxueshu/literature-review-skills) (MIT) | Strongly recommended | S1 question refinement, S5 contradiction mapping | `-WithDeps` clones it |
 | `sr-screener` | Optional | S3 blinded screening for systematic reviews | Install separately |
 | `academic-paper` | Optional | S6 citation / format checks | Install separately |
-| [nature-figure](https://github.com/Yuan1z0825/nature-skills) (Apache-2.0) | Optional | S5 figure rendering, auditing, export | Install into `.dsh/skills/nature-figure/` |
+| [nature-figure](https://github.com/Yuan1z0825/nature-skills) (Apache-2.0) | Optional | S5 structural / framework figures: rendering, audit, export (statistical charts use `fig-render`) | Install into `.dsh/skills/nature-figure/` |
 | AMiner MCP | Optional | S3 machine search channel | See `skills/lit-review-6step/references/aminer.md` |
 
 If YAN or StarTower is missing, the orchestrator stops at preflight and tells you — it will not pretend to have read them.
@@ -138,7 +165,9 @@ You do not have to start at S1. Tell the agent what you already have:
 |---|---|
 | `/lit-review` | Start at S1, from a broad direction |
 | `/lit-review-s2` | Start at S2 with a fixed topic |
-| `/survey-outline` | Produce the "new technology × old problem" outline only |
+| `/survey-outline` | Run the structure selector, then produce chapter-level outline and figure plan (pattern A uses the seven-section skeleton); no prose |
+| `/reading-table` | Design and generate a tier × dimension reading workbook (Excel) from the RQ |
+| `/fig-plan` | Statistical questions → figure candidates and aggregated data → rendered charts |
 | `/survey-abstract` | Write or revise the abstract only |
 | `/mentor-check` | Run a mentor review to check whether the current stage has drifted |
 
@@ -152,7 +181,7 @@ In Claude Code, copy `commands/*.md` into `.claude/commands/` and run `/lit-revi
 | S2 Strategy | Search strategy table + log | Every row has database / query / limits / expected hits |
 | S3 Search & screening | Candidate table + PRISMA counts | Counts reconcile; every exclusion has a code |
 | S4 Close reading | Extraction table + notes | 100% of included papers have a row; limitations filled |
-| S5 Synthesis | Concept matrix + contradiction map + outline + draft | Taxonomy passes the ten-paper blind test; every section contrasts ≥2 papers |
+| S5 Synthesis | Concept matrix + contradiction map + outline + draft | Taxonomy passes the ten-paper blind test; each theme carries ≥1 L3 relation judgment; synthesis claims need ≥2 independent sources (definition / descriptive paragraphs are exempt) |
 | S6 Final editing | Manuscript + abstract + checklist | Citations traceable, format consistent, abstract promises fulfilled |
 
 Every stage gate starts with a **mentor review (MR)**: compare against `00_选题/主题契约.md` and ask only "are we still answering the same question?".
@@ -196,7 +225,7 @@ lit-review-6step/
 │  ├─ survey-writing/       # body writing
 │  ├─ survey-abstract/      # abstract
 │  └─ shared/evidence-norms.md
-├─ commands/                # seven entry commands
+├─ commands/                # nine entry commands
 ├─ templates/文献综述项目模板/
 ├─ catalog/skills.json
 ├─ scripts/                 # check / e2e-init / e2e-score / gold-from-surveys
@@ -213,7 +242,8 @@ lit-review-6step/
 - The AMiner channel needs your own API key. Without one, fall back to manual database search; the candidate table schema does not change.
 - Citation checking depends on the optional `academic-paper`; without it, verification is manual.
 - The repository bundles no third-party skill code; the installer fetches MIT dependencies on the user's machine.
-- Only one structure pattern ("new technology × old problem") is implemented. `references/survey-structure.md` has room for more.
+- The six structures are organizational patterns, not executable checks: structure choice, the ten-paper taxonomy blind test and L3 relation judgments are still prose gates; `audit-taxonomy` only inspects the taxonomy table itself (single-paper categories, "other" share, single-source categories, included-but-uncategorized).
+- The figure chain covers statistical charts only: `fig-render` does no statistics, and `stat-questions` scores topical relevance by keyword rules rather than semantics, so re-check after changing the topic.
 - The three reviews (MR / CR-S / HLA-S) are the same model in different roles. They reduce drift and self-justification but **cannot catch every problem**; check the contract yourself at key points.
 - Skill instructions are in Chinese.
 

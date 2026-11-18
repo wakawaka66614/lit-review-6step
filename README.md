@@ -22,7 +22,7 @@
 | 结构僵化、为结构造分类 | 结构选择器：六种模式里选一个，模式 A 只是可选之一 |
 | 文献够了其实不够 | 覆盖矩阵 + `audit-coverage`：主题/方法/时间三维查缺口 |
 | 分类看着整齐其实脆弱 | `audit-taxonomy`：单篇类别、其他占比、来源单一、纳入未分类 |
-| 图表套模板 | `stat-questions` 按主题生成统计问题；`fig-plan` 出候选、`fig-render` 渲染 |
+| 图表套模板 | `stat-questions` 先出统计问题 → `fig-plan` 出候选图表计划 → `fig-render` 出统计图；结构图 / 框架图才走 `nature-figure`（见「图表」一节） |
 | Excel 精读表读不进 | `xlsx-to-csv` 转成提取表，保留梯队与 9 个维度列 |
 | 读文献没有统一记录结构 | `reading-table` 按主题生成“多梯队 × 多维度”精读表（Excel） |
 
@@ -34,11 +34,11 @@
 | `skills/survey-writing/` | 综述正文：物种选择、taxonomy、图表规划、Gate A/B/C、CR-S / HLA-S 审校模型 |
 | `skills/survey-abstract/` | 摘要五段式（钩子 → 定位 → 框架 → 证据 → 展望），只保留功能、不锁句式 |
 | `skills/shared/evidence-norms.md` | 三个 skill 共用的证据与语言规范（四级核验；`用户提供` 是来源标签） |
-| `commands/` | 七个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
+| `commands/` | 九个命令：`lit-review` / `lit-review-s2` / `survey-outline` / `reading-table` / `fig-plan` / `survey-abstract` / `mentor-check` / `search-openalex` / `audit-refs` |
 | `scripts/` | 自检与审计：`check.mjs`、`merge-results.mjs`、`audit-refs`（skill 内）、`audit-taxonomy.mjs`、`audit-coverage.mjs`、`stat-questions.mjs`、`fig-plan.mjs`、`fig-render.py`、`xlsx-to-csv.py`、`make-reading-table.py`；E2E：`e2e-init/e2e-score/gold-from-surveys` |
 | `skills/lit-review-6step/scripts/` | `audit-refs.mjs`（引用审计）、`search-openalex.mjs`（检索/引文）、`aminer_health.mjs` |
 | `templates/文献综述项目模板/` | 六步目录 + 候选表 / 原始结果 / 提取表 / 论断证据 / 文献关系表 + 契约 / 提纲 / 审校 / 自检模板 |
-| `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 重构记录 |
+| `docs/` | `workflow.md` 流程、`E2E_TEST_PLAN.md` 对照测试、`REVISION_PLAN_v2_2026-11-17.md` 与 `REVISION_PLAN_v2.1_2026-11-17.md` 重构记录、`V2.1_TEST_REPORT.md` 测试报告 |
 
 ## 安装
 
@@ -120,13 +120,35 @@ node scripts/audit-taxonomy.mjs --taxonomy 04_综合/taxonomy.csv --candidates 0
 node scripts/audit-coverage.mjs --matrix 04_综合/覆盖矩阵.csv
 ```
 
+## 图表（S5）
+
+出图分三步，**先有问题，再选图型**：
+
+```powershell
+node scripts/stat-questions.mjs --extraction 03_精读/提取表.csv --topic "你的主题" --out-dir 04_综合
+node scripts/fig-plan.mjs --candidates 01_检索/候选表.csv --extraction 03_精读/提取表.csv `
+  --relations 04_综合/文献关系表.csv --coverage 04_综合/覆盖矩阵.csv --out-dir 04_综合
+python scripts/fig-render.py --spec 04_综合/图表计划.csv --out-dir 04_综合/figures --formats pdf,svg,png
+```
+
+使用限制：
+
+- `stat-questions` 只生成「数据能回答、且与主题相关」的候选问题（多少 / 怎么分布），不回答「为什么更好」；相关性按关键词规则打分，换主题后要人工复核。文本字段（局限、发现）先编码再统计；不传 `--topic` 时全部降为低优先级。
+- `fig-plan` 只出候选：从候选表 / 提取表 / 关系表 / 覆盖矩阵聚合出 `图表计划.csv` 与 `data/*.csv`，**不判断这个主题该画什么**；要按论点删到 3–6 张，补齐 `claim_id` 与结论式标题。
+- `fig-render` 只渲染**统计图**（bar / hbar / line / stacked_bar / grouped_bar / scatter / heatmap），数据必须是已聚合的 CSV（列名写进图表计划），不做统计计算；结构图 / 框架图 / taxonomy 总图交 `nature-figure`，数据图不能用示意图冒充。
+- 中文字体依赖本机（Microsoft YaHei / SimHei / Noto Sans CJK SC），三者都没有时中文会缺字，需换字体或改英文标签。
+
 ## 验证
 
-- 当前版本 **2.5.0**；仓库自检 44 项通过
+- 当前版本 **2.5.0**；仓库自检 **50 项通过**（`node scripts/check.mjs`，7 组检查）
 - 脚本级验证记录见 `skills/lit-review-6step/VALIDATION.md`（审计、OpenAlex、安装器、评分脚本）
-- 对照测试计划见 `docs/E2E_TEST_PLAN.md`；检索阶段已跑：单查询覆盖 **3.3%**，多查询 + 引文追踪 **36.7%**（顶刊综述派生金标准，见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`）
+- 对照测试计划见 `docs/E2E_TEST_PLAN.md`。检索阶段跑了两组实验，**条件不同，数字不能混用**：
+  - **无预算控制（A vs C）**：单查询 25 条覆盖 **3.3%**；多查询 + 引文追踪 132 条覆盖 **36.7%**（3 条分面查询 75 条时仍 3.3%，增量来自引文追踪），见 `e2e/graph-neural-networks-for-recommender-sy-20261117/RESULTS.md`
+  - **控制预算（A/B/C/D）**：同为 25 条预算时 A **3.3%** / B **0.0%** / C **13.3%**；D 放开预算到 194 条才 **60.0%**，见同目录 `RESULTS-abcd.md`
+  - **60.0% 与 36.7% 不可直接对比**：差别主要在预算（194 vs 132 条），不是策略优劣
+  - 金标准是顶刊综述派生 30 条（CSUR / TORS / TOIS），非人工核验；只跑了一个主题，不能外推
 - 写作阶段小试：无法回溯引用 **2 vs 0**（同模型直写 vs 流程产出，见 `RESULTS-writing.md`；非质量对照）
-- **未做**：独立评价人盲评的全流程 A/B/C；`VALIDATION.md` 里如实标注了这一点
+- **未做**：独立评价人盲评的全流程质量对照（写作优劣）；`VALIDATION.md` 里如实标注了这一点
 
 ## 依赖
 
@@ -137,7 +159,7 @@ node scripts/audit-coverage.mjs --matrix 04_综合/覆盖矩阵.csv
 | [星塔五件套](https://github.com/xingtaxueshu/literature-review-skills)（MIT） | 强烈建议 | S1 选题、S5 冲突梳理 | `-WithDeps` 自动 clone |
 | `sr-screener` | 可选 | S3 系统综述双盲筛选 | 自行安装 |
 | `academic-paper` | 可选 | S6 引用 / 格式核查 | 自行安装 |
-| [nature-figure](https://github.com/Yuan1z0825/nature-skills)（Apache-2.0） | 可选 | S5 出图、审图、导出 | 自行安装到 `.dsh/skills/nature-figure/` |
+| [nature-figure](https://github.com/Yuan1z0825/nature-skills)（Apache-2.0） | 可选 | S5 结构图 / 框架图出图、审图、导出（统计图用 `fig-render`） | 自行安装到 `.dsh/skills/nature-figure/` |
 | AMiner MCP | 可选 | S3 机器检索通道 | 见 `skills/lit-review-6step/references/aminer.md` |
 
 缺 YAN / 星塔时，编排器会在预检阶段停下并提示，不会假装读过。
@@ -161,7 +183,9 @@ node scripts/audit-coverage.mjs --matrix 04_综合/覆盖矩阵.csv
 |---|---|
 | `/lit-review` | 从 S1 开始，第一步是选题 |
 | `/lit-review-s2` | 已有题目，从 S2 检索策略开始 |
-| `/survey-outline` | 只出「新技术 × 旧问题」提纲，不写正文 |
+| `/survey-outline` | 先跑结构选择器，再出章节细纲与图表计划（模式 A 用七节骨架），不写正文 |
+| `/reading-table` | 按主题设计并生成「多梯队 × 多维度」精读记录表（Excel） |
+| `/fig-plan` | 先出统计问题，再出图表候选与聚合数据，最后渲染统计图 |
 | `/survey-abstract` | 只写或改摘要 |
 | `/mentor-check` | 跑一次导师审查，看当前阶段有没有跑题 |
 | `/search-openalex` | 用 OpenAlex 检索或做前向/后向引文追踪 |
@@ -177,7 +201,7 @@ Claude Code 把 `commands/*.md` 放到 `.claude/commands/`，之后可直接输�
 | S2 策略 | 检索策略表 + 日志 | 每行有库 / 式 / 限定 / 预计量 |
 | S3 检索初筛 | 候选表 + PRISMA 计数 | 计数闭合，每条有排除码 |
 | S4 精读提取 | 提取表 + 笔记 | 纳入文献 100% 有行，局限非空 |
-| S5 综合写作 | 概念矩阵 + 冲突地图 + 提纲 + 初稿 | taxonomy 过十篇盲测，每段 ≥2 篇对撞 |
+| S5 综合写作 | 概念矩阵 + 冲突地图 + 提纲 + 初稿 | taxonomy 过十篇盲测；每个主题 ≥1 条 L3 关系判断；综合性判断 ≥2 条独立证据（定义 / 描述段不强制多篇） |
 | S6 统稿 | 终稿 + 摘要 + 自检清单 | 引用可回溯，格式统一，摘要承诺兑现 |
 
 每个阶段门禁前先跑**导师审查（MR）**：对照 `00_选题/主题契约.md`，只判断“还在回答同一个问题吗”。
@@ -221,7 +245,7 @@ lit-review-6step/
 │  ├─ survey-writing/       # 正文写作
 │  ├─ survey-abstract/      # 摘要
 │  └─ shared/evidence-norms.md
-├─ commands/                # 七个入口
+├─ commands/                # 九个入口
 ├─ templates/文献综述项目模板/
 ├─ catalog/skills.json
 ├─ scripts/                 # check / e2e-init / e2e-score / gold-from-surveys
@@ -238,7 +262,8 @@ lit-review-6step/
 - AMiner 检索通道需要自己的 API key；没有 key 时走手工库降级，候选表字段不变。
 - 引用核查依赖可选的 `academic-paper`；没装时只能按清单人工核对。
 - 仓库不包含任何第三方 skill 源码，第三方由安装脚本在用户本机下载。
-- 结构模式目前只有「新技术 × 旧问题」一种，`references/survey-structure.md` 预留了扩展位。
+- 六种结构是组织方式，不是可执行检查：结构选择、taxonomy 十篇盲测、L3 关系判断仍是文字门禁；`audit-taxonomy` 只查分类表本身（单篇类别、「其他」占比、来源单一、纳入未分类）。
+- 图表链路只覆盖统计图：`fig-render` 不做统计计算；`stat-questions` 的主题相关性是关键词规则，不是语义判断，换主题要人工复核。
 - 三道审查（MR / CR-S / HLA-S）由同一个模型换角色扮演，能降低跑偏和自我辩护，**不保证发现所有问题**；关键节点仍需人工确认。
 
 ## 许可证
