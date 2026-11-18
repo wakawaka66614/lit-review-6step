@@ -202,7 +202,7 @@ const DIM_LABELS = {
 const DIM_KEYS = Object.keys(DIM_LABELS);
 const presentDims = DIM_KEYS.filter((r) => roles[r]);
 if (presentDims.length >= 3) {
-  addQuestion('九个维度的填写完成度如何？', '证据完整度', presentDims.map((r) => roles[r]).join(','), 'fill_rate', 'heatmap', 'evaluation', '维度多且都是自由文本，先看哪些维度证据最薄');
+  addQuestion('各梯队各维度记录得有多厚？', '证据厚度', presentDims.map((r) => roles[r]).join(','), 'avg_chars', 'heatmap', 'evaluation', '全填满时看平均记录长度，比看空率更能发现证据薄的地方');
   for (const r of ['memory_object', 'addressing', 'retrieval', 'replacement', 'evaluation', 'limitation']) {
     if (!roles[r]) continue;
     addQuestion(`「${DIM_LABELS[r]}」可以归成哪几类？`, DIM_LABELS[r], roles[r], 'coding', 'bar', r, '自由文本，需先编码再统计，不能直接分词当结论');
